@@ -29,9 +29,19 @@ public class TransformManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        // inputControl = new PlayerInputControl();
+        inputControl = new PlayerInputControl();
 
-        // inputControl.Gameplay.Jump.started += TransformInput;
+        inputControl.Gameplay.Transform.started += TransformInput;
+    }
+
+    private void OnEnable()
+    {
+        inputControl.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputControl.Disable();
     }
     // Start is called before the first frame update
     void Start()
@@ -45,7 +55,7 @@ public class TransformManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TransformInput();
+
     }
 
     public void SetHitTag(string hitTag)
@@ -72,20 +82,14 @@ public class TransformManager : MonoBehaviour
 
     }
 
-    public void TransformInput()
+    public void TransformInput(InputAction.CallbackContext obj)
     {
-
-        
-
-        if (Input.GetKeyDown(KeyCode.Z))
+        Debug.Log("TransformInput");
+        if (hitTag != null)
         {
-            Debug.Log("Transform Input");
-            if (hitTag != null)
+            if (hitTag == "Soldier")
             {
-                if (hitTag == "Soldier")
-                {
-                    TransformCharacter(soldierPrefab, currentPlayer.transform.position);
-                }
+                TransformCharacter(soldierPrefab, currentPlayer.transform.position);
             }
         }
 
