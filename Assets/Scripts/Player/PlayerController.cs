@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,15 +9,28 @@ public class PlayerController : MonoBehaviour
 {
     public PlayerInputControl inputControl;
     public Vector2 inputDirection;
-
-    public float speed;
-
     private Rigidbody2D rb;
+
+    private PhysicsCheck physicsCheck;
+
+    [Header("Player Movement parameters")]
+    public float speed;
+    public float jumpForce;
 
     private void Awake()
     {
         inputControl = new PlayerInputControl();
         rb = GetComponent<Rigidbody2D>();
+        physicsCheck = GetComponent<PhysicsCheck>(); 
+        inputControl.Gameplay.Jump.started += Jump;
+    }
+
+    private void Jump(InputAction.CallbackContext obj)
+    {
+        if(physicsCheck.isGrounded){
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
+        
     }
 
     private void OnEnable()
@@ -45,4 +60,6 @@ public class PlayerController : MonoBehaviour
         //flip player sprite
         transform.localScale = new Vector3(inputDirection.x < 0 ? -5 : 5, 5, 5);
     }
+
+
 }
