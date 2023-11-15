@@ -1,5 +1,6 @@
 Library/
 Temp/
+Logs/
 *.sln
 *.csproj
 *.sln
@@ -8,3 +9,4 @@ Temp/
 *.DS_Store
 *.log
 *.dwlt
+

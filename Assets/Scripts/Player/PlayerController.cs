@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,8 +60,8 @@ public class PlayerController : MonoBehaviour
 
         //flip player sprite
         Vector3 currentScale = transform.localScale;
-        currentScale.x = inputDirection.x < 0 ? -5 : (inputDirection.x > 0 ? 5 : currentScale.x);
-        transform.localScale = new Vector3(currentScale.x, 5, 5);
+        currentScale.x = inputDirection.x < 0 ? -math.abs(currentScale.x) : (inputDirection.x > 0 ? math.abs(currentScale.x) : currentScale.x);
+        transform.localScale = new Vector3(currentScale.x, transform.localScale.y, transform.localScale.z);
     }
 
 
