@@ -10,3 +10,8 @@ Logs/
 *.log
 *.dwlt
 
+Logs/AssetImportWorker0.log
+Logs/AssetImportWorker1.log
+Logs/shadercompiler-AssetImportWorker0.log
+Logs/shadercompiler-UnityShaderCompiler.exe0.log
+UserSettings/Layouts/default-2022.dwlt
