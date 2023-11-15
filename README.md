@@ -4,4 +4,3 @@ cmpm125 final
 **Team members:**  
 -  Zhuo Chen
 -  Lizhuoyuan Wan  
--  Guixiang Li  
