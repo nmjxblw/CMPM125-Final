@@ -433,6 +433,33 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &392223380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3874231088007972939, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
+  m_PrefabInstance: {fileID: 8602869631569413886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &392223385
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392223380}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.75
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 7
+  m_BaseOffset: 3.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -26430,11 +26457,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 664268977540716019, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.24
+      value: 55.873837
       objectReference: {fileID: 0}
     - target: {fileID: 664268977540716019, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.99
+      value: 5.028748
       objectReference: {fileID: 0}
     - target: {fileID: 664268977540716019, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26475,7 +26502,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3874231088007972939, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 392223385}
   m_SourcePrefab: {fileID: 100100000, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

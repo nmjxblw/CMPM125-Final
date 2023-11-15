@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>(); 
         inputControl.Gameplay.Jump.started += Jump;
+
+        inputControl.Gameplay.JumpAttack.started += JumpAttack;
     }
 
     private void Jump(InputAction.CallbackContext obj)
@@ -31,7 +33,13 @@ public class PlayerController : MonoBehaviour
         if(physicsCheck.isGrounded){
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         }
-        
+    }
+
+     private void JumpAttack(InputAction.CallbackContext obj)
+    {
+        if(!physicsCheck.isGrounded){
+            Debug.Log("AirAttack");
+        }
     }
 
     private void OnEnable()

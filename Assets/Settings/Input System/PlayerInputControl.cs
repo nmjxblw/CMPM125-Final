@@ -53,6 +53,15 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JumpAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f7e1c83-e23d-4b2e-9d4d-278415f06c74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +238,17 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Transform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""922d1822-1774-49d8-92e1-c77863e5344b"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""JumpAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -819,6 +839,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Transform = m_Gameplay.FindAction("Transform", throwIfNotFound: true);
+        m_Gameplay_JumpAttack = m_Gameplay.FindAction("JumpAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -895,6 +916,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Transform;
+    private readonly InputAction m_Gameplay_JumpAttack;
     public struct GameplayActions
     {
         private @PlayerInputControl m_Wrapper;
@@ -902,6 +924,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Transform => m_Wrapper.m_Gameplay_Transform;
+        public InputAction @JumpAttack => m_Wrapper.m_Gameplay_JumpAttack;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -920,6 +943,9 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
             @Transform.started += instance.OnTransform;
             @Transform.performed += instance.OnTransform;
             @Transform.canceled += instance.OnTransform;
+            @JumpAttack.started += instance.OnJumpAttack;
+            @JumpAttack.performed += instance.OnJumpAttack;
+            @JumpAttack.canceled += instance.OnJumpAttack;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -933,6 +959,9 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
             @Transform.started -= instance.OnTransform;
             @Transform.performed -= instance.OnTransform;
             @Transform.canceled -= instance.OnTransform;
+            @JumpAttack.started -= instance.OnJumpAttack;
+            @JumpAttack.performed -= instance.OnJumpAttack;
+            @JumpAttack.canceled -= instance.OnJumpAttack;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -1118,6 +1147,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTransform(InputAction.CallbackContext context);
+        void OnJumpAttack(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
