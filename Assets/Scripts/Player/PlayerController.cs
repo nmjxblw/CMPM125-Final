@@ -58,7 +58,9 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);
 
         //flip player sprite
-        transform.localScale = new Vector3(inputDirection.x < 0 ? -5 : 5, 5, 5);
+        Vector3 currentScale = transform.localScale;
+        currentScale.x = inputDirection.x < 0 ? -5 : (inputDirection.x > 0 ? 5 : currentScale.x);
+        transform.localScale = new Vector3(currentScale.x, 5, 5);
     }
 
 
