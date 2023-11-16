@@ -60,6 +60,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        Debug.Log(other.name);
     }
 
     private void Move()
