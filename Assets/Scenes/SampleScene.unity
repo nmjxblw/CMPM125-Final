@@ -983,6 +983,8 @@ GameObject:
   - component: {fileID: 978528233}
   - component: {fileID: 978528232}
   - component: {fileID: 978528236}
+  - component: {fileID: 978528238}
+  - component: {fileID: 978528237}
   m_Layer: 8
   m_Name: Enemy Boar
   m_TagString: Boar
@@ -1164,6 +1166,43 @@ CapsuleCollider2D:
   m_Offset: {x: -0.25396878, y: 0.64550877}
   m_Size: {x: 1.836025, y: 1.2910279}
   m_Direction: 1
+--- !u!114 &978528237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978528231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78359932ba44aee4794be56c98e8cf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSpeed: 100
+  chaseSpeed: 260
+  currentSpeed: 0
+  faceDirection: {x: 0, y: 0, z: 0}
+--- !u!95 &978528238
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978528231}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 10285af6659e3a041a1216a3fd5c256d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1025087372
 GameObject:
   m_ObjectHideFlags: 0
