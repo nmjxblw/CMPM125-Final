@@ -5,54 +5,69 @@ using UnityEngine.AI;
 
 public class PathFinding : MonoBehaviour
 {
+    public float attackRange = 0.1f;
     public GameObject target;
     public LayerMask playerLayer = new LayerMask();
-    private Transform targetTrasform;
-    private Vector3 Destination;
+    private Rigidbody2D targetRb;
+    private Vector2 destination;
+    private Vector2 moveDirection = Vector2.zero;
+    private Rigidbody2D rb;
+    private float distance;
+    public float currentSpeed = 4f;
 
     private void Awake()
     {
         target = target ? target : GameObject.FindGameObjectWithTag("Player");
-        targetTrasform = target.transform;
-        Destination = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        targetRb = target.GetComponent<Rigidbody2D>();
+        destination = rb.position;
     }
 
 
     private bool isTargetInSight()
     {
 
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y + 0.95f);
-        float viewAngle = 60f;
+        Vector2 rayOrigin = new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f);
+        float viewAngle = 90f;
         float viewRadius = 10f;
 
         for (int i = 0; i < 180; i++)
         {
             float angle = transform.eulerAngles.z - viewAngle / 2 + i * (viewAngle / 180f);
-            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, viewRadius, playerLayer);
-            Debug.DrawRay(origin, direction * viewRadius, Color.red);
-            if (hit.collider != null && hit.collider.transform == targetTrasform)
+            Vector2 rayDirection = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, viewRadius, playerLayer);
+            Debug.DrawRay(rayOrigin, rayDirection * viewRadius, Color.red);
+            if (hit.collider != null && hit.collider.gameObject == target)
             {
+
                 return true;
             }
         }
         return false;
     }
 
-    void Update()
+    public virtual void Update()
     {
         // change state only
-        if (isTargetInSight())
+        distance = Vector2.Distance(rb.position, targetRb.position);
+        if (isTargetInSight() && distance > attackRange)
         {
-            Destination = targetTrasform.position;
+            destination = targetRb.position;
         }
         else
         {
-            Destination = transform.position;
+            destination = rb.position;
         }
+        moveDirection = (destination - rb.position).normalized;
     }
 
-    void MoveToDestination(){
-        
+    public void FixedUpdate()
+    {
+        MoveToDestination();
+    }
+
+    public void MoveToDestination()
+    {
+        rb.velocity = new Vector2(currentSpeed * moveDirection.x, rb.velocity.y);
     }
 }

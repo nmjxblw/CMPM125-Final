@@ -450,10 +450,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8873a9f4fe9a5ee458d4cf0589e49e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 0.1
   target: {fileID: 1548136899}
   playerLayer:
     serializedVersion: 2
     m_Bits: 1
+  currentSpeed: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,7 +1122,7 @@ Transform:
   m_GameObject: {fileID: 978528231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.97, y: 3.99, z: 0}
+  m_LocalPosition: {x: 8.97, y: 3.082, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1214,13 +1216,13 @@ MonoBehaviour:
   touchLeftWall: 0
   touchRightWall: 0
   manual: 1
-  groundCheckRadius: 0.1
+  checkRaduis: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   bottomOffset: {x: -1.3, y: 0}
-  leftOffset: {x: -1.09, y: 0.63}
-  rightOffset: {x: 0.66, y: 0.63}
+  leftOffset: {x: -1.09, y: 0.67}
+  rightOffset: {x: 0.73, y: 0.67}
 --- !u!1 &1025087372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,8 +1802,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0074332333, y: 0.12430429}
-  m_Size: {x: 0.325579, y: 0.23791884}
+  m_Offset: {x: 0.0011922515, y: 0.12847354}
+  m_Size: {x: 0.30277672, y: 0.24625742}
   m_Direction: 1
 --- !u!50 &1548136901
 Rigidbody2D:
@@ -1891,7 +1893,7 @@ Transform:
   m_GameObject: {fileID: 1548136899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.87, y: 3.276, z: 0}
+  m_LocalPosition: {x: -0.87, y: 2.85, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1928,7 +1930,7 @@ MonoBehaviour:
   touchLeftWall: 0
   touchRightWall: 0
   manual: 1
-  groundCheckRadius: 0.05
+  checkRaduis: 0.08
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
