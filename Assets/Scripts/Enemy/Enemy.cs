@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody2D rb;
-    Animator animator;
+    PhysicsCheck physicsCheck;
+    protected Animator animator;
     [Header("Enemy Movement parameters")]
     public float normalSpeed;
     public float chaseSpeed;
@@ -17,12 +18,17 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        physicsCheck = GetComponent<PhysicsCheck>();
         currentSpeed = normalSpeed;
     }
 
     private void Update()
     {
         faceDirection = new Vector3(-transform.localScale.x, 0, 0);
+        if(physicsCheck.touchLeftWall || physicsCheck.touchRightWall)
+        {
+            transform.localScale = new Vector3(faceDirection.x, 1, 1);
+        }
         
     }
 
@@ -31,7 +37,7 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
-    public void Move()
+    public virtual void Move()
     {
         rb.velocity = new Vector2(currentSpeed * Time.deltaTime * faceDirection.x, rb.velocity.y);
     }
