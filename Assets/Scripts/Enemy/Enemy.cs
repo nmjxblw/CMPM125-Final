@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     Rigidbody2D rb;
     PhysicsCheck physicsCheck;
-    protected Animator animator;
+    [HideInInspector] public Animator animator;
     [Header("Enemy Movement parameters")]
     public float normalSpeed;
     public float chaseSpeed;

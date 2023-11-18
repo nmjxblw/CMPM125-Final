@@ -438,7 +438,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3874231088007972939, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
   m_PrefabInstance: {fileID: 8602869631569413886}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &392223386
+--- !u!114 &392223391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -447,15 +447,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 392223380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8873a9f4fe9a5ee458d4cf0589e49e41, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bd9c2ff98320b84aa8f6332d8fa58a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 0.1
+  currentSpeed: 4
   target: {fileID: 1548136899}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 1
-  currentSpeed: 4
+    m_Bits: 128
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,6 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78359932ba44aee4794be56c98e8cf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   normalSpeed: 100
   chaseSpeed: 260
   currentSpeed: 0
@@ -1893,7 +1894,7 @@ Transform:
   m_GameObject: {fileID: 1548136899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.87, y: 2.85, z: 0}
+  m_LocalPosition: {x: 61.8, y: 3.6, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27034,7 +27035,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3874231088007972939, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 392223386}
+      addedObject: {fileID: 392223391}
   m_SourcePrefab: {fileID: 100100000, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
