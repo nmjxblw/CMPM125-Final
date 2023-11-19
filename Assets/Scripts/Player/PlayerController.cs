@@ -17,12 +17,15 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement parameters")]
     public float speed;
     public float jumpForce;
+    public float hurtForce;
+    public bool isHurt;
+    public bool isDead;
 
     private void Awake()
     {
         inputControl = new PlayerInputControl();
         rb = GetComponent<Rigidbody2D>();
-        physicsCheck = GetComponent<PhysicsCheck>(); 
+        physicsCheck = GetComponent<PhysicsCheck>();
         inputControl.Gameplay.Jump.started += Jump;
 
         inputControl.Gameplay.JumpAttack.started += JumpAttack;
@@ -30,14 +33,16 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
-        if(physicsCheck.isGrounded){
+        if (physicsCheck.isGrounded)
+        {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
-     private void JumpAttack(InputAction.CallbackContext obj)
+    private void JumpAttack(InputAction.CallbackContext obj)
     {
-        if(!physicsCheck.isGrounded){
+        if (!physicsCheck.isGrounded)
+        {
             Debug.Log("AirAttack");
         }
     }
@@ -59,14 +64,16 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-
+        if (!isHurt)
+        {
+            Move();
+        }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-    }
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     Debug.Log(other.name);
+    // }
 
     private void Move()
     {
@@ -78,5 +85,18 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(currentScale.x, transform.localScale.y, transform.localScale.z);
     }
 
+    public void GetHurt(Transform attacker)
+    {
+        isHurt = true;
+        rb.velocity = Vector2.zero;
+        Vector2 dir = new Vector2(transform.position.x - attacker.position.x, 0).normalized;
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+    }
 
+    public void PlayerDead()
+    {
+        isDead = true;
+        inputControl.Gameplay.Disable();
+        
+    }
 }

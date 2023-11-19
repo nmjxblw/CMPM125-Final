@@ -73,14 +73,16 @@ public class Enemy : MonoBehaviour
     {
         attacker = attackTrans;
 
+        
+
         //Turn to face attacker
         if(attackTrans.position.x > transform.position.x)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         if(attackTrans.position.x < transform.position.x)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 }
