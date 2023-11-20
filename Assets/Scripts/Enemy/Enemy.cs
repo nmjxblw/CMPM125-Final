@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isHurt & !isDead)
+        if (!isHurt && !isDead && !wait)
         {
             Move();
         }
