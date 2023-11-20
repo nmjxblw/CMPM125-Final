@@ -24,10 +24,13 @@ public class Enemy : MonoBehaviour
     public float waitTimeCounter;
     public bool wait;
 
+    [Header("Enemy State")]
+    public bool isHurt;
+    public bool isDead;
     private BaseState currentState;
     protected BaseState patroState;
 
-    protected BaseState chaseState
+    protected BaseState chaseState;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -66,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDisable()
     {
-        currentState.OnExit()
+        currentState.OnExit();
     }
 
     public virtual void Move()
