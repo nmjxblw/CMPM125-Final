@@ -1,5 +1,7 @@
 public abstract class BaseState{
-    public abstract void OnEnter();
+
+    protected Enemy currentEnemy;
+    public abstract void OnEnter(Enemy enemy);
     public abstract void OnExit();
     public abstract void PhysicsUpdate();
     public abstract void LogicUpdate();

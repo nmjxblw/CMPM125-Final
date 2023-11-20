@@ -8,12 +8,12 @@ public class Enemy : MonoBehaviour
 {
 
     Rigidbody2D rb;
-    PhysicsCheck physicsCheck;
+    [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
     [Header("Enemy Basic parameters")]
     public float normalSpeed;
     public float chaseSpeed;
-    public float currentSpeed;
+    [HideInInspector] public float currentSpeed;
     public Vector3 faceDirection;
 
     public Transform attacker;
@@ -30,10 +30,9 @@ public class Enemy : MonoBehaviour
     public bool isHurt;
     public bool isDead;
     private BaseState currentState;
-    protected BaseState patroState;
-
+    protected BaseState patrolState;
     protected BaseState chaseState;
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -58,28 +57,20 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        //currentSpeedState = patroState;
-        //currentState.OnEnter();
+        //currentState = patrolState;
+        //currentState.OnEnter(this);
     }
     private void Update()
     {
         faceDirection = new Vector3(-transform.localScale.x, 0, 0);
-
-        if ((physicsCheck.touchLeftWall && faceDirection.x < 0) || (physicsCheck.touchRightWall && faceDirection.x > 0))
-        {
-            wait = true;
-            animator.SetBool("walk", false);
-        }
-
+        currentState.LogicUpdate();
         TimeCounter();
-        //currentState.LogicUpdate();
-
     }
 
     private void FixedUpdate()
     {
-        // if (!isHurt & !isDead)
-        Move();
+        if (!isHurt & !isDead)
+        { Move(); }
 
         //currentState.PhysicsUpdate();
     }
