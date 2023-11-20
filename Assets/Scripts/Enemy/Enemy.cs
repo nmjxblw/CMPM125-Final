@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
 
     Rigidbody2D rb;
-    PhysicsCheck physicsCheck;
+    [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
     [Header("Enemy Movement parameters")]
     public float normalSpeed;
@@ -23,9 +23,8 @@ public class Enemy : MonoBehaviour
     public bool wait;
 
     private BaseState currentState;
-    protected BaseState patroState;
-
-    protected BaseState chaseState
+    protected BaseState patrolState;
+    protected BaseState chaseState;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,18 +35,14 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        currentSpeedState = patroState;
-        currentState.OnEnter();
+        currentState = patrolState;
+        currentState.OnEnter(this);
     }
     private void Update()
     {
         faceDirection = new Vector3(-transform.localScale.x, 0, 0);
 
-        if ((physicsCheck.touchLeftWall && faceDirection.x < 0) || (physicsCheck.touchRightWall && faceDirection.x > 0))
-        {
-            wait = true;
-            animator.SetBool("walk", false);
-        }
+
 
         TimeCounter();
         currentState.LogicUpdate();
@@ -56,15 +51,15 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // if (!isHurt & !isDead)
-        Move();
+        if (!isHurt & !isDead)
+        { Move(); }
 
         currentState.PhysicsUpdate();
     }
 
     private void OnDisable()
     {
-        currentState.OnExit()
+        currentState.OnExit();
     }
 
     public virtual void Move()
@@ -90,14 +85,14 @@ public class Enemy : MonoBehaviour
     {
         attacker = attackTrans;
 
-        
+
 
         //Turn to face attacker
-        if(attackTrans.position.x > transform.position.x)
+        if (attackTrans.position.x > transform.position.x)
         {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
-        if(attackTrans.position.x < transform.position.x)
+        if (attackTrans.position.x < transform.position.x)
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
