@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,20 +10,23 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
-    [Header("Enemy Movement parameters")]
+    [Header("Enemy Basic parameters")]
     public float normalSpeed;
     public float chaseSpeed;
     public float currentSpeed;
-
     public Vector3 faceDirection;
 
-    protected Transform attacker;
+    public Transform attacker;
+    public float hurtForce;
 
     [Header("Timer")]
     public float waitTime;
     public float waitTimeCounter;
     public bool wait;
 
+    [Header("Enemy State")]
+    public bool isHurt;
+    public bool isDead;
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
@@ -90,11 +95,36 @@ public class Enemy : MonoBehaviour
         //Turn to face attacker
         if (attackTrans.position.x > transform.position.x)
         {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
         }
         if (attackTrans.position.x < transform.position.x)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
         }
+
+        //受伤击退
+        isHurt = true;
+        animator.SetTrigger("hurt");
+        Vector2 dir = new Vector2(transform.position.x - attackTrans.position.x, 0).normalized;
+        StartCoroutine(Hurt(dir));
+    }
+
+    private IEnumerator Hurt(Vector2 dir)
+    {
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
+        isHurt = false;
+    }
+
+    public void OnDead()
+    {
+        gameObject.layer = 2;
+        animator.SetBool("dead", true);
+        isDead = true;
+    }
+
+    public void DestroyAfterAnimation()
+    {
+        Destroy(gameObject);
     }
 }
