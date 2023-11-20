@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     [Header("Timer")]
     public float waitTime;
     public float waitTimeCounter;
-    public bool wait;
+    public bool wait = false;
 
     [Header("Enemy State")]
     public bool isHurt;
@@ -43,9 +43,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         x = transform.localScale.x;
-        Debug.Log(x);
-
-        if(transform.localScale.x > 0)
+        if (transform.localScale.x > 0)
         {
             x = math.abs(transform.localScale.x);
         }
@@ -57,8 +55,8 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        //currentState = patrolState;
-        //currentState.OnEnter(this);
+        currentState = patrolState;
+        currentState.OnEnter(this);
     }
     private void Update()
     {
@@ -70,14 +68,16 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isHurt & !isDead)
-        { Move(); }
+        {
+            Move();
+        }
 
-        //currentState.PhysicsUpdate();
+        currentState.PhysicsUpdate();
     }
 
     private void OnDisable()
     {
-        //currentState.OnExit();
+        currentState.OnExit();
     }
 
     public virtual void Move()
@@ -104,11 +104,11 @@ public class Enemy : MonoBehaviour
         attacker = attackTrans;
 
         //Turn to face attacker
-        if(attackTrans.position.x > transform.position.x)
+        if (attackTrans.position.x > transform.position.x)
         {
             transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
         }
-        if(attackTrans.position.x < transform.position.x)
+        if (attackTrans.position.x < transform.position.x)
         {
             transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
         }

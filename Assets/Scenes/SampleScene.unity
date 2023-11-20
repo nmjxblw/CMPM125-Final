@@ -1288,6 +1288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78359932ba44aee4794be56c98e8cf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsCheck: {fileID: 0}
   animator: {fileID: 0}
   normalSpeed: 100
   chaseSpeed: 260
@@ -1333,7 +1334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f182e63313e964fbcdb9bb8b5f71d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
+  isGrounded: 1
   touchLeftWall: 0
   touchRightWall: 0
   manual: 1

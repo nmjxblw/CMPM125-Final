@@ -9,9 +9,9 @@ public class Boar : Enemy
         base.Awake();
         patrolState = new BoarPatrolState();
     }
-    // public override void Move()
-    // {
-    //     base.Move();
-    //     animator.SetBool("walk", true);
-    // }
+    public override void Move()
+    {
+        base.Move();
+        animator.SetBool("walk", true);
+    }
 }

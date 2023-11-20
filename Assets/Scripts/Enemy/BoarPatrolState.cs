@@ -17,6 +17,9 @@ public class BoarPatrolState : BaseState
             currentEnemy.wait = true;
             currentEnemy.animator.SetBool("walk", false);
         }
+        else{
+            currentEnemy.animator.SetBool("walk", true);
+        }
     }
     public override void PhysicsUpdate() { }
 }
