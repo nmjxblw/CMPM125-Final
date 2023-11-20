@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInputControl inputControl;
+    private PlayerAnimation playerAnimation;
     public Vector2 inputDirection;
     private Rigidbody2D rb;
 
@@ -18,17 +20,21 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     public float hurtForce;
+
+    [Header("Player State")]
     public bool isHurt;
     public bool isDead;
+    public bool isAttack;
 
     private void Awake()
     {
         inputControl = new PlayerInputControl();
+        playerAnimation = GetComponent<PlayerAnimation>();
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
         inputControl.Gameplay.Jump.started += Jump;
 
-        inputControl.Gameplay.JumpAttack.started += JumpAttack;
+        inputControl.Gameplay.Attack.started += PlayerAttack;
     }
 
     private void Jump(InputAction.CallbackContext obj)
@@ -85,6 +91,14 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(currentScale.x, transform.localScale.y, transform.localScale.z);
     }
 
+    private void PlayerAttack(InputAction.CallbackContext context)
+    {
+        playerAnimation.PlayerAttack();
+        isAttack = true;
+
+    }
+
+#region UnityEvent
     public void GetHurt(Transform attacker)
     {
         isHurt = true;
@@ -99,4 +113,5 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Disable();
         
     }
+#endregion
 }

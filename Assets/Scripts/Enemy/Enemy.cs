@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     public Transform attacker;
     public float hurtForce;
 
+    private float x;
+
     [Header("Timer")]
     public float waitTime;
     public float waitTimeCounter;
@@ -39,10 +41,25 @@ public class Enemy : MonoBehaviour
         currentSpeed = normalSpeed;
     }
 
+    private void Start()
+    {
+        x = transform.localScale.x;
+        Debug.Log(x);
+
+        if(transform.localScale.x > 0)
+        {
+            x = math.abs(transform.localScale.x);
+        }
+        else
+        {
+            x = -math.abs(transform.localScale.x);
+        }
+    }
+
     private void OnEnable()
     {
-        currentSpeedState = patroState;
-        currentState.OnEnter();
+        //currentSpeedState = patroState;
+        //currentState.OnEnter();
     }
     private void Update()
     {
@@ -55,7 +72,7 @@ public class Enemy : MonoBehaviour
         }
 
         TimeCounter();
-        currentState.LogicUpdate();
+        //currentState.LogicUpdate();
 
     }
 
@@ -64,12 +81,12 @@ public class Enemy : MonoBehaviour
         // if (!isHurt & !isDead)
         Move();
 
-        currentState.PhysicsUpdate();
+        //currentState.PhysicsUpdate();
     }
 
     private void OnDisable()
     {
-        currentState.OnExit();
+        //currentState.OnExit();
     }
 
     public virtual void Move()
@@ -94,17 +111,6 @@ public class Enemy : MonoBehaviour
     public void OnTakenDamage(Transform attackTrans)
     {
         attacker = attackTrans;
-
-        float x = transform.position.x;
-
-        if(transform.position.x > 0)
-        {
-            x = math.abs(transform.position.x);
-        }
-        else
-        {
-            x = -math.abs(transform.position.x);
-        }
 
         //Turn to face attacker
         if(attackTrans.position.x > transform.position.x)
