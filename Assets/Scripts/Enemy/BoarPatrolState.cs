@@ -11,8 +11,8 @@ public class BoarPatrolState : BaseState
     public override void OnExit() { }
     public override void LogicUpdate()
     {
-        if ((currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDirection.x < 0) ||
-         (currentEnemy.physicsCheck.touchRightWall && CurrentEnemy.faceDirection.x > 0))
+        if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDirection.x < 0) ||
+         (currentEnemy.physicsCheck.touchRightWall && currentEnemy.faceDirection.x > 0))
         {
             currentEnemy.wait = true;
             currentEnemy.animator.SetBool("walk", false);

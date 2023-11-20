@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Basic parameters")]
     public float normalSpeed;
     public float chaseSpeed;
-    public float currentSpeed;
+    [HideInInspector] public float currentSpeed;
     public Vector3 faceDirection;
 
     public Transform attacker;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -46,12 +46,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         faceDirection = new Vector3(-transform.localScale.x, 0, 0);
-
-
-
-        TimeCounter();
         currentState.LogicUpdate();
-
+        TimeCounter();
     }
 
     private void FixedUpdate()
@@ -90,14 +86,23 @@ public class Enemy : MonoBehaviour
     {
         attacker = attackTrans;
 
+        float x = transform.position.x;
 
+        if(transform.position.x > 0)
+        {
+            x = math.abs(transform.position.x);
+        }
+        else
+        {
+            x = -math.abs(transform.position.x);
+        }
 
         //Turn to face attacker
-        if (attackTrans.position.x > transform.position.x)
+        if(attackTrans.position.x > transform.position.x)
         {
             transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
         }
-        if (attackTrans.position.x < transform.position.x)
+        if(attackTrans.position.x < transform.position.x)
         {
             transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
         }
