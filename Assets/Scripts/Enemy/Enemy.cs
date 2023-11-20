@@ -24,10 +24,10 @@ public class Enemy : MonoBehaviour
     public float waitTimeCounter;
     public bool wait;
 
-    [Header("Enemy State")]
-    public bool isHurt;
-    public bool isDead;
+    private BaseState currentState;
+    protected BaseState patroState;
 
+    protected BaseState chaseState
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,6 +36,11 @@ public class Enemy : MonoBehaviour
         currentSpeed = normalSpeed;
     }
 
+    private void OnEnable()
+    {
+        currentSpeedState = patroState;
+        currentState.OnEnter();
+    }
     private void Update()
     {
         faceDirection = new Vector3(-transform.localScale.x, 0, 0);
@@ -47,16 +52,21 @@ public class Enemy : MonoBehaviour
         }
 
         TimeCounter();
+        currentState.LogicUpdate();
 
     }
 
     private void FixedUpdate()
     {
-        if(!isHurt && !isDead)
-        {
-            Move();
-        }
-        
+        // if (!isHurt & !isDead)
+        Move();
+
+        currentState.PhysicsUpdate();
+    }
+
+    private void OnDisable()
+    {
+        currentState.OnExit()
     }
 
     public virtual void Move()
