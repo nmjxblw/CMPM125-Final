@@ -53,8 +53,8 @@ public class Character : MonoBehaviour
             //触发死亡
             OnDeath?.Invoke();
         }
-
-
+        transform.Find("HpDisplay")?.gameObject.SetActive(true);
+        GetComponentInChildren<EnemyUI>()?.UpdateHpDisplay();
     }
 
     private void TriggerInvulnerable()
@@ -65,6 +65,4 @@ public class Character : MonoBehaviour
             invulnerableCounter = invulnerableDuration;
         }
     }
-
-
 }

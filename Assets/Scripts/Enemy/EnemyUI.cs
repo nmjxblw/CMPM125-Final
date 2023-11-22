@@ -7,28 +7,30 @@ using TMPro;
 public class EnemyUI : MonoBehaviour
 {
     [Header("Hp bar setting")]
+    private Character character;
     private Image HpBarImage;
     private Image HpBarEffectImage;
     [SerializeField] private float hpBarEffectDuration = 0.5f;
     private Coroutine updateCoroutine;
+    private Coroutine disableCoroutine;
 
-    void Update()
-    {
-        // make hp bar face camera
-        transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+    private void Update(){
+        transform.localScale = new Vector3(transform.parent.localScale.x, 1, 1);
     }
-
     private void OnEnable()
     {
         //get components from children
         HpBarImage = transform.Find("HpBar").Find("HpBarImage").GetComponent<Image>();
         HpBarEffectImage = transform.Find("HpBar").Find("HpBarEffectImage").GetComponent<Image>();
+        character = transform.parent.GetComponent<Character>();
+        HpBarImage.fillAmount = (float)character.currentHealth / (float)character.maxHealth;
+        HpBarEffectImage.fillAmount = HpBarImage.fillAmount;
     }
 
     public void UpdateHpDisplay()
     {
         //TODO: Update hp bar, need enemy states script.
-        // HpBar.fillAmount = (float)enemyScript.currentHp / (float)enemyScript.maxHp;
+        HpBarImage.fillAmount = (float)character.currentHealth / (float)character.maxHealth;
         if (updateCoroutine != null)
         {
             StopCoroutine(updateCoroutine);
@@ -48,5 +50,14 @@ public class EnemyUI : MonoBehaviour
             yield return null;
         }
         HpBarEffectImage.fillAmount = HpBarImage.fillAmount;
+        if(disableCoroutine != null){
+            StopCoroutine(disableCoroutine);
+        }
+        disableCoroutine = StartCoroutine(DisableSelf());
+    }
+
+    private IEnumerator DisableSelf(){
+        yield return new WaitForSeconds(15f);
+        gameObject.SetActive(false);
     }
 }
