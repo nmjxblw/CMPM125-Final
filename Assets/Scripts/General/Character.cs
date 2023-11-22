@@ -16,7 +16,7 @@ public class Character : MonoBehaviour
     public UnityEvent<Transform> OnTakeDamage;
     public UnityEvent OnDeath;
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
     }
@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void TakeDamage(Attack attacker)
+    public virtual void TakeDamage(Attack attacker)
     {
         if (invulnerable)
         {
