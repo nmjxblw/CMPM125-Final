@@ -12,10 +12,14 @@ public class TransformManager : MonoBehaviour
 
     public GameObject currentPlayer;
     public GameObject soldierPrefab;
+    public GameObject BoarPrefab;
 
     public string hitTag;
 
     public CinemachineVirtualCamera cinemachineCamera;
+
+    public float maxHealth = 100;
+    public float currentHealth;
 
     void Awake()
     {
@@ -32,6 +36,7 @@ public class TransformManager : MonoBehaviour
         inputControl = new PlayerInputControl();
 
         inputControl.Gameplay.Transform.started += TransformInput;
+        currentHealth = maxHealth;
     }
 
     private void OnEnable()
@@ -88,6 +93,12 @@ public class TransformManager : MonoBehaviour
         if (hitTag != null)
         {
             if (hitTag == "Soldier")
+            {
+                TransformCharacter(soldierPrefab, currentPlayer.transform.position);
+
+            }
+
+            if (hitTag == "Boar")
             {
                 TransformCharacter(soldierPrefab, currentPlayer.transform.position);
             }

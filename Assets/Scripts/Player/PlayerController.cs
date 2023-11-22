@@ -10,11 +10,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInputControl inputControl;
-    private PlayerAnimation playerAnimation;
+    protected PlayerAnimation playerAnimation;
     public Vector2 inputDirection;
     private Rigidbody2D rb;
 
     private PhysicsCheck physicsCheck;
+
+    private float originLocalScaleX;
 
     [Header("Player Movement parameters")]
     public float speed;
@@ -26,14 +28,15 @@ public class PlayerController : MonoBehaviour
     public bool isDead;
     public bool isAttack;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         inputControl = new PlayerInputControl();
         playerAnimation = GetComponent<PlayerAnimation>();
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
-        inputControl.Gameplay.Jump.started += Jump;
+        originLocalScaleX = transform.localScale.x;
 
+        inputControl.Gameplay.Jump.started += Jump;
         inputControl.Gameplay.Attack.started += PlayerAttack;
     }
 
@@ -42,14 +45,6 @@ public class PlayerController : MonoBehaviour
         if (physicsCheck.isGrounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
-    private void JumpAttack(InputAction.CallbackContext obj)
-    {
-        if (!physicsCheck.isGrounded)
-        {
-            Debug.Log("AirAttack");
         }
     }
 
@@ -76,26 +71,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // private void OnTriggerStay2D(Collider2D other)
-    // {
-    //     Debug.Log(other.name);
-    // }
-
     private void Move()
     {
         rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);
 
         //flip player sprite
         Vector3 currentScale = transform.localScale;
-        currentScale.x = inputDirection.x < 0 ? -math.abs(currentScale.x) : (inputDirection.x > 0 ? math.abs(currentScale.x) : currentScale.x);
+        if(originLocalScaleX > 0)
+        {
+            currentScale.x = inputDirection.x < 0 ? -math.abs(currentScale.x) : (inputDirection.x > 0 ? math.abs(currentScale.x) : currentScale.x);
+        }
+        else if(originLocalScaleX < 0)
+        {
+            currentScale.x = inputDirection.x < 0 ? math.abs(currentScale.x) : (inputDirection.x > 0 ? -math.abs(currentScale.x) : currentScale.x);
+        }
         transform.localScale = new Vector3(currentScale.x, transform.localScale.y, transform.localScale.z);
+
     }
 
-    private void PlayerAttack(InputAction.CallbackContext context)
+    protected virtual void PlayerAttack(InputAction.CallbackContext context)
     {
         playerAnimation.PlayerAttack();
         isAttack = true;
-
     }
 
 #region UnityEvent
@@ -111,7 +108,6 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         inputControl.Gameplay.Disable();
-        
     }
 #endregion
 }
