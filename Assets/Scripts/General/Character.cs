@@ -57,7 +57,7 @@ public class Character : MonoBehaviour
         GetComponentInChildren<EnemyUI>()?.UpdateHpDisplay();
     }
 
-    private void TriggerInvulnerable()
+    public void TriggerInvulnerable()
     {
         if (!invulnerable)
         {
