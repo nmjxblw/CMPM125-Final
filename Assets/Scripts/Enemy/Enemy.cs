@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
+    protected BaseState attackState;
+    protected BaseState skillState;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -129,15 +131,26 @@ public class Enemy : MonoBehaviour
         return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, sightCheckBoxSize, 0, faceDirection, sightCheckBoxDistance, attackLayer);
     }
 
+    public bool IsTargetInAttackRange(){
+        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, sightCheckBoxSize, 0, faceDirection, sightCheckBoxDistance, attackLayer);
+    }
+#if true
+/// <summary>
+/// Check if the target is in sight
+/// </summary>
+/// <returns></returns>
+    public bool IsTargetInSight()
+    {
+        return IsTargetInSight(new Vector2(0f, 0f));
+    }
     /// <summary>
     /// Check if the target is in sight
     /// </summary>
-    /// <returns>if player in sight returns true else false.</returns>
-#if false
-    private bool isTargetInSight()
+    /// <param name="sightOffset">the sight offset</param>
+    /// <returns></returns>
+    public bool IsTargetInSight(Vector2 sightOffset)
     {
-
-        Vector2 rayOrigin = new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f);
+        Vector2 rayOrigin = new Vector2(transform.position.x + sightOffset.x, transform.position.y + sightOffset.y);
         float viewAngle = 90f;
         float viewRadius = 10f;
 
@@ -145,9 +158,9 @@ public class Enemy : MonoBehaviour
         {
             float angle = transform.eulerAngles.z - viewAngle / 2 + i * (viewAngle / 180f);
             Vector2 rayDirection = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, viewRadius, playerLayer);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, viewRadius, attackLayer);
             Debug.DrawRay(rayOrigin, rayDirection * viewRadius, Color.red);
-            if (hit.collider != null && hit.collider.gameObject == target)
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Player"))
             {
 
                 return true;
@@ -162,6 +175,8 @@ public class Enemy : MonoBehaviour
         {
             EnemyState.patrol => patrolState,
             EnemyState.chase => chaseState,
+            EnemyState.skill => skillState,
+            EnemyState.attack => attackState,
             _ => null,
         };
         currentState.OnExit();
@@ -218,6 +233,9 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
     #endregion
+    /// <summary>
+    /// This function is used to draw the sight box in the editor.
+    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset, 0.2f);
@@ -232,4 +250,5 @@ public enum EnemyState
     patrol,
     chase,
     skill,
+    attack,
 }

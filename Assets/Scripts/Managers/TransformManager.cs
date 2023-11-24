@@ -89,7 +89,6 @@ public class TransformManager : MonoBehaviour
 
     public void TransformInput(InputAction.CallbackContext obj)
     {
-        Debug.Log("TransformInput");
         if (hitTag != null)
         {
             if (hitTag == "Soldier")
