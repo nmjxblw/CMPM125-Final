@@ -1058,7 +1058,6 @@ GameObject:
   - component: {fileID: 824959581}
   - component: {fileID: 824959580}
   - component: {fileID: 824959586}
-  - component: {fileID: 824959585}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -1151,8 +1150,7 @@ Transform:
   m_LocalPosition: {x: 8.07, y: 3.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 247127083}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &824959580
@@ -1299,40 +1297,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &824959585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824959576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a901c8ac8d065448b2a5cbc8421241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  physicsCheck: {fileID: 0}
-  animator: {fileID: 0}
-  patrolSpeed: 200
-  chaseSpeed: 200
-  currentSpeed: 0
-  faceDirection: {x: 0, y: 0, z: 0}
-  attacker: {fileID: 0}
-  hurtForce: 0
-  x: 0
-  centerOffset: {x: 0, y: 1.5}
-  sightCheckBoxSize: {x: 8, y: 2}
-  sightCheckBoxDistance: -5
-  attackLayer:
-    m_Bits: 128
-  waitTime: 2
-  waitTimeCounter: 2
-  wait: 0
-  lostTargetTime: 3
-  lostTargetTimeCounter: 3
-  isHurt: 0
-  isDead: 0
 --- !u!114 &824959586
 MonoBehaviour:
   m_ObjectHideFlags: 0
