@@ -14,6 +14,7 @@ public class BoarPatrolState : BaseState
     {
         if (currentEnemy.FoundPlayer())
         {
+            Debug.Log("Found player");
             currentEnemy.SwitchState(EnemyState.chase);
             return;
         }
