@@ -313,6 +313,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &14809339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5251088991852260881, guid: 67fd9f7df94f5b94e84996848225b0a1, type: 3}
+  m_PrefabInstance: {fileID: 7892022982547980096}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &104826590
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.49
@@ -490,11 +499,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
---- !u!1 &397105463 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
-  m_PrefabInstance: {fileID: 397105462}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,7 +2132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!70 &1548136900
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2552,7 +2556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126c129a694a7e84382475f60bb157f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayer: {fileID: 397105463}
+  currentPlayer: {fileID: 14809339}
   soldierPrefab: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
   BoarPrefab: {fileID: 0}
   hitTag: 
