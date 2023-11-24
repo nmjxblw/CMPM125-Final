@@ -313,11 +313,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &14809339 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5251088991852260881, guid: 67fd9f7df94f5b94e84996848225b0a1, type: 3}
-  m_PrefabInstance: {fileID: 7892022982547980096}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &104826590
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +433,68 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &397105462
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_Name
+      value: Player Soldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.039
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+--- !u!1 &397105463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+  m_PrefabInstance: {fileID: 397105462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +627,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.29, y: 4.49, z: -25.54}
+  m_LocalPosition: {x: 5.47, y: 4.49, z: -25.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1269,7 +1326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede16d406f64f8448bdbab8c327d8e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 20
   attackRange: 0
   attackRate: 0
 --- !u!114 &978528241
@@ -1286,7 +1343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   currentHealth: 0
-  invulnerableDuration: 1
+  invulnerableDuration: 0.1
   invulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:
@@ -2071,7 +2128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!70 &1548136900
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2348,6 +2405,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  defence: 0
 --- !u!1001 &1927244842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2494,7 +2552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126c129a694a7e84382475f60bb157f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayer: {fileID: 14809339}
+  currentPlayer: {fileID: 397105463}
   soldierPrefab: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
   BoarPrefab: {fileID: 0}
   hitTag: 
@@ -27442,7 +27500,7 @@ Transform:
   m_GameObject: {fileID: 2140141702}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.29, y: 4.49, z: -25.54}
+  m_LocalPosition: {x: 5.47, y: 4.49, z: -25.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27514,18 +27572,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 296573361641262555, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
-      propertyPath: m_Size.y
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 296573361641262555, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 296573361641262555, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.95
-      objectReference: {fileID: 0}
     - target: {fileID: 664268977540716019, guid: aaf9a0802fb87aa499f94541620683df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 57.94
@@ -27584,10 +27630,11 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1427490580}
   - {fileID: 1548136903}
+  - {fileID: 7892022982547980096}
+  - {fileID: 397105462}
   - {fileID: 8602869631569413886}
   - {fileID: 1025087374}
   - {fileID: 2037703779}
   - {fileID: 556168203}
   - {fileID: 978528235}
-  - {fileID: 7892022982547980096}
   - {fileID: 1166276326}
