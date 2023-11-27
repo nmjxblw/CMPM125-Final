@@ -32,8 +32,6 @@ public class PlayerCharacter : Character
             //触发死亡
             OnDeath?.Invoke();
         }
-        transform.Find("HpDisplay")?.gameObject.SetActive(true);
-        GetComponentInChildren<EnemyUI>()?.UpdateHpDisplay();
         TransformManager.Instance.currentHealth = currentHealth;
     }
 

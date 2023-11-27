@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInputControl inputControl;
     protected PlayerAnimation playerAnimation;
     public Vector2 inputDirection;
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     private PhysicsCheck physicsCheck;
 
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!isHurt)
         {
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Move()
+    protected void Move()
     {
         rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);
 
