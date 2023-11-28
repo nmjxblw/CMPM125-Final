@@ -9,6 +9,7 @@ public class RangerAttackState : BaseState
         currentEnemy = enemy;
         currentEnemy.currentSpeed = 0;
         currentEnemy.animator.SetBool("attack", true);
+        Debug.Log("OnEnter AttackState success");
     }
 
     public override void LogicUpdate()
@@ -28,6 +29,9 @@ public class RangerAttackState : BaseState
         {
             currentEnemy.SwitchState(EnemyState.patrol);
             return;
+        }
+        if(((Ranger)currentEnemy).shoot){
+            ((Ranger)currentEnemy).ShootArrow();
         }
     }
     public override void PhysicsUpdate() { }

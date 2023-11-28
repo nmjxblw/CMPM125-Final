@@ -60,4 +60,9 @@ public class EnemyUI : MonoBehaviour
         yield return new WaitForSeconds(15f);
         gameObject.SetActive(false);
     }
+
+    protected virtual void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position,0.1f);
+    }
 }

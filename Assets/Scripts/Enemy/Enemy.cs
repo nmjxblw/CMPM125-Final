@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Update()
     {
-        currentFaceDirection = transform.localScale.x == 1 ? initialFaceDirection : initialFaceDirection == FaceDirection.left ? FaceDirection.right : FaceDirection.left;
+        currentFaceDirection = transform.localScale.x > 0 ? initialFaceDirection : initialFaceDirection == FaceDirection.left ? FaceDirection.right : FaceDirection.left;
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         UpdateTargetInformation();
         currentState.LogicUpdate();
@@ -217,7 +217,7 @@ public class Enemy : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset, 0.2f);
-        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3((initialFaceDirection == FaceDirection.right ? transform.localScale.x : -transform.localScale.x) * checkBoxDistance, 0, 0), checkBoxSize);
+        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3((initialFaceDirection == FaceDirection.right ? 1 : -1) * checkBoxDistance, 0, 0), checkBoxSize);
     }
 }
 /// <summary>

@@ -40,7 +40,7 @@ public class Boar : Enemy
             {
                 wait = false;
                 waitTimeCounter = waitTime;
-                transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
         }
     }
