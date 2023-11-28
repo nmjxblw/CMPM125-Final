@@ -13,6 +13,7 @@ public class RangerShoot : MonoBehaviour
     void OnEnable()
     {
         arrow = ArrowPool.SharedInstance.GetPooledObject();
+        arrow.GetComponent<Arrow>().rangerDirection = transform.parent.localScale.x;
         if (arrow != null)
         {
             arrow.transform.position = transform.position;

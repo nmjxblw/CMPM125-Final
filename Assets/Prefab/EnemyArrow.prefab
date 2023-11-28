@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8548204933525328811}
   - component: {fileID: 6983242761563101026}
-  - component: {fileID: 796260825146974273}
   - component: {fileID: 4900357040931482982}
   - component: {fileID: 1564655267195739315}
+  - component: {fileID: 6049898565316345637}
   - component: {fileID: 4461463439290098330}
   m_Layer: 8
   m_Name: EnemyArrow
@@ -88,21 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &796260825146974273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5268484046562157103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede16d406f64f8448bdbab8c327d8e0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  attackRange: 0
-  attackRate: 0
 --- !u!50 &4900357040931482982
 Rigidbody2D:
   serializedVersion: 4
@@ -175,6 +160,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0114367, y: 0.3255502}
   m_EdgeRadius: 0
+--- !u!114 &6049898565316345637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268484046562157103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9e725bd0c5b5745b0c6f104412ec57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  attackRange: 0
+  attackRate: 0
 --- !u!114 &4461463439290098330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,3 +189,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   destoryDistance: 40
+  rangerDirection: 0
