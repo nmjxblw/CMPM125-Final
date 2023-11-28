@@ -451,11 +451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.49
+      value: 46.07
       objectReference: {fileID: 0}
     - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.039
+      value: 8.41
       objectReference: {fileID: 0}
     - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1289,6 +1289,7 @@ GameObject:
   - component: {fileID: 824959581}
   - component: {fileID: 824959580}
   - component: {fileID: 824959586}
+  - component: {fileID: 824959587}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -1378,8 +1379,8 @@ Transform:
   m_GameObject: {fileID: 824959576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.07, y: 3.25, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: 30.36, y: 5.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1402,10 +1403,34 @@ MonoBehaviour:
   invulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 824959587}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: OnTakenDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 824959587}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: OnDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &824959581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,7 +1524,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 3}
+  m_Size: {x: 2.5, y: 3}
   m_EdgeRadius: 0
 --- !u!50 &824959584
 Rigidbody2D:
@@ -1540,17 +1565,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f182e63313e964fbcdb9bb8b5f71d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
+  isGrounded: 1
   touchLeftWall: 0
   touchRightWall: 0
-  manual: 0
-  checkRaduis: 0
+  manual: 1
+  checkRaduis: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
-  bottomOffset: {x: 0, y: 0}
-  leftOffset: {x: 0, y: 0}
-  rightOffset: {x: 0, y: 0}
+    m_Bits: 64
+  bottomOffset: {x: 2.5, y: 0}
+  leftOffset: {x: -1.5, y: 1.5}
+  rightOffset: {x: 1.5, y: 1.5}
+--- !u!114 &824959587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824959576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a901c8ac8d065448b2a5cbc8421241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicsCheck: {fileID: 0}
+  animator: {fileID: 0}
+  patrolSpeed: 100
+  chaseSpeed: 200
+  currentSpeed: 0
+  initialFaceDirection: 1
+  currentFaceDirection: 0
+  moveDirection: {x: 0, y: 0}
+  attacker: {fileID: 0}
+  hurtForce: 5
+  centerOffset: {x: 0, y: 1.5}
+  checkBoxSize: {x: 10, y: 1}
+  checkBoxDistance: 5
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  targetInSight: 0
+  targetInAttackRange: 0
+  target: {fileID: 0}
+  lostTargetTime: 3
+  lostTargetTimeCounter: 3
+  isHurt: 0
+  isDead: 0
+  enemyState: 0
+  rangerSightOffset: {x: 0, y: 2.5}
+  rangerViewAngle: 90
+  rangerViewRadius: 20
+  waitTime: 3
+  waitTimeCounter: 3
+  wait: 0
 --- !u!1 &978528231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,22 +1835,28 @@ MonoBehaviour:
   patrolSpeed: 100
   chaseSpeed: 260
   currentSpeed: 0
-  faceDirection: {x: 0, y: 0, z: 0}
+  initialFaceDirection: 0
+  currentFaceDirection: 0
+  moveDirection: {x: 0, y: 0}
   attacker: {fileID: 0}
   hurtForce: 2
   centerOffset: {x: 0, y: 0.64}
-  sightCheckBoxSize: {x: 1, y: 1}
-  sightCheckBoxDistance: 3
+  checkBoxSize: {x: 2, y: 1}
+  checkBoxDistance: 3
   attackLayer:
     serializedVersion: 2
     m_Bits: 128
-  waitTime: 2
-  waitTimeCounter: 2
-  wait: 0
+  targetInSight: 0
+  targetInAttackRange: 0
+  target: {fileID: 0}
   lostTargetTime: 3
   lostTargetTimeCounter: 3
   isHurt: 0
   isDead: 0
+  enemyState: 0
+  waitTime: 2
+  waitTimeCounter: 2
+  wait: 0
 --- !u!95 &978528238
 Animator:
   serializedVersion: 5
@@ -1825,7 +1898,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  bottomOffset: {x: -1.3, y: 0}
+  bottomOffset: {x: -1.46, y: 0}
   leftOffset: {x: -0.94, y: 0.9}
   rightOffset: {x: 0.94, y: 0.9}
 --- !u!114 &978528240

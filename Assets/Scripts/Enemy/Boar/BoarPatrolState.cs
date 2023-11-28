@@ -6,22 +6,21 @@ public class BoarPatrolState : BaseState
 {
     public override void OnEnter(Enemy enemy)
     {
-        currentEnemy = enemy;
+        currentEnemy = enemy as Boar;
         currentEnemy.currentSpeed = currentEnemy.patrolSpeed;
     }
 
     public override void LogicUpdate()
     {
-        if (currentEnemy.FoundPlayer())
+        if (currentEnemy.IsTargetInSight())
         {
-            Debug.Log("Found player");
             currentEnemy.SwitchState(EnemyState.chase);
             return;
         }
-        if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDirection.x < 0) ||
-         (currentEnemy.physicsCheck.touchRightWall && currentEnemy.faceDirection.x > 0))
+        if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.currentFaceDirection == FaceDirection.left) ||
+         (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
         {
-            currentEnemy.wait = true;
+            ((Boar)currentEnemy).wait = true;
             currentEnemy.animator.SetBool("walk", false);
         }
         else
