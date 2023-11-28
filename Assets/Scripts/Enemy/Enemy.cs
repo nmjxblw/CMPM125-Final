@@ -14,33 +14,34 @@ public class Enemy : MonoBehaviour
     public float patrolSpeed;
     public float chaseSpeed;
     [HideInInspector] public float currentSpeed;
-    public Vector3 faceDirection;
 
-    public Transform attacker;
+    public FaceDirection initialFaceDirection;
+    public FaceDirection currentFaceDirection;
+    [HideInInspector] public Vector2 moveDirection = Vector2.zero;
+    [HideInInspector] public Transform attacker;
     public float hurtForce;
 
-    private float x;
-
-    [Header("Attack Check")]
+    [Header("Hitbox Check")]
+    [Tooltip("This is the offset from the center of the enemy to the attack point.")]
     public Vector2 centerOffset;
-    public Vector2 sightCheckBoxSize;
-    public float sightCheckBoxDistance;
-
+    [Tooltip("The hitbox size of the enemy's sight.")]
+    public Vector2 checkBoxSize;
+    [Tooltip("The distance of the enemy's sight hitbox.")]
+    public float checkBoxDistance;
     public LayerMask attackLayer;
+    public bool targetInSight = false;
+    public bool targetInAttackRange = false;
 
-    [Header("Timer For Partol")]
-    public float waitTime;
-    public float waitTimeCounter;
-    public bool wait = false;
-
-    [Header("Timer For Chase")]
-
+    [Header("Timer For Check Lost Target")]
+    public GameObject target;
     public float lostTargetTime;
     public float lostTargetTimeCounter;
+    private bool lostTarget = false;
 
     [Header("Enemy State")]
     public bool isHurt;
     public bool isDead;
+    public EnemyState enemyState;
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
@@ -55,67 +56,68 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        x = transform.localScale.x;
-        if (transform.localScale.x > 0)
-        {
-            x = math.abs(transform.localScale.x);
-        }
-        else
-        {
-            x = -math.abs(transform.localScale.x);
-        }
+        currentFaceDirection = initialFaceDirection;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         currentState = patrolState;
         currentState.OnEnter(this);
     }
-    private void Update()
+    protected virtual void Update()
     {
-        faceDirection = new Vector3(-transform.localScale.x, 0, 0);
+        currentFaceDirection = transform.localScale.x > 0 ? initialFaceDirection : initialFaceDirection == FaceDirection.left ? FaceDirection.right : FaceDirection.left;
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+        UpdateTargetInformation();
         currentState.LogicUpdate();
         TimeCounter();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        if (!isHurt && !isDead && !wait)
-        {
-            Move();
-        }
-
         currentState.PhysicsUpdate();
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         currentState.OnExit();
     }
 
-    public virtual void Move()
+    protected virtual void Move()
     {
-        rb.velocity = new Vector2(currentSpeed * Time.deltaTime * faceDirection.x, rb.velocity.y);
+        moveDirection = currentFaceDirection == FaceDirection.left ? new Vector2(-1, moveDirection.y) : new Vector2(1, moveDirection.y);
+        rb.velocity = new Vector2(currentSpeed * Time.deltaTime * moveDirection.x, rb.velocity.y);
     }
 
+    protected virtual void UpdateTargetInformation()
+    {
+        target = GameObject.FindGameObjectWithTag("Player");
+        IsTargetInSight();
+        IsTargetInAttackRange();
+    }
 
     /// <summary>
     /// Update the time counter for the wait time
     /// </summary>
-    public void TimeCounter()
+    protected virtual void TimeCounter()
     {
-        if (wait)
-        {
-            waitTimeCounter -= Time.deltaTime;
-            if (waitTimeCounter <= 0)
-            {
-                wait = false;
-                waitTimeCounter = waitTime;
-                transform.localScale = new Vector3(faceDirection.x, 1, 1);
-            }
-        }
+        UpdateWaitTimer();
+        UpdateLostTargetTimer();
+    }
 
-        if (!FoundPlayer())
+    protected virtual void UpdateWaitTimer()
+    {
+        //Just provide a default implementation for the wait timer
+        //For some enemies, they don't have 
+        return;
+    }
+
+    // If target is not in the sight for a certain time, 
+    // set lostTarget to true and set the timer to 0 .
+    // otherwise, set the timer to the lostTargetTime. And set lostTarget to false.
+    protected virtual void UpdateLostTargetTimer()
+    {
+        if (!targetInSight)
         {
             lostTargetTimeCounter -= Time.deltaTime;
             lostTargetTimeCounter = math.max(0, lostTargetTimeCounter);
@@ -124,53 +126,32 @@ public class Enemy : MonoBehaviour
         {
             lostTargetTimeCounter = lostTargetTime;
         }
+        lostTarget = lostTargetTimeCounter == 0;
     }
 
-    public bool FoundPlayer()
+    // the hitbox to sumulate the attack range or sight
+    protected bool IsHitBox()
     {
-        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, sightCheckBoxSize, 0, faceDirection, sightCheckBoxDistance, attackLayer);
+        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, checkBoxSize, 0, moveDirection, checkBoxDistance, attackLayer);
     }
 
-    public bool IsTargetInAttackRange(){
-        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, sightCheckBoxSize, 0, faceDirection, sightCheckBoxDistance, attackLayer);
+    public virtual bool IsTargetInAttackRange()
+    {
+        return targetInAttackRange = false;
     }
 #if true
-/// <summary>
-/// Check if the target is in sight
-/// </summary>
-/// <returns></returns>
-    public bool IsTargetInSight()
-    {
-        return IsTargetInSight(new Vector2(0f, 0f));
-    }
     /// <summary>
-    /// Check if the target is in sight
+    /// Check if the target is in sight also update the targetInSight to true or false.
     /// </summary>
-    /// <param name="sightOffset">the sight offset</param>
     /// <returns></returns>
-    public bool IsTargetInSight(Vector2 sightOffset)
+    public virtual bool IsTargetInSight()
     {
-        Vector2 rayOrigin = new Vector2(transform.position.x + sightOffset.x, transform.position.y + sightOffset.y);
-        float viewAngle = 90f;
-        float viewRadius = 10f;
-
-        for (int i = 0; i < 180; i++)
-        {
-            float angle = transform.eulerAngles.z - viewAngle / 2 + i * (viewAngle / 180f);
-            Vector2 rayDirection = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, viewRadius, attackLayer);
-            Debug.DrawRay(rayOrigin, rayDirection * viewRadius, Color.red);
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Player"))
-            {
-
-                return true;
-            }
-        }
-        return false;
+        return targetInSight = false;
     }
 #endif
     public void SwitchState(EnemyState state)
     {
+        enemyState = state;
         var newState = state switch
         {
             EnemyState.patrol => patrolState,
@@ -187,15 +168,12 @@ public class Enemy : MonoBehaviour
     public void OnTakenDamage(Transform attackTrans)
     {
         attacker = attackTrans;
-
         //Turn to face attacker
-        if (attackTrans.position.x > transform.position.x)
+        if ((attackTrans.position.x > transform.position.x && currentFaceDirection == FaceDirection.left) || (attackTrans.position.x < transform.position.x && currentFaceDirection == FaceDirection.right))
         {
-            transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
-        }
-        if (attackTrans.position.x < transform.position.x)
-        {
-            transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
+            //attacker is on the back
+            //face to the attacker
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
         //give a force when taking damage
@@ -236,10 +214,10 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// This function is used to draw the sight box in the editor.
     /// </summary>
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset, 0.2f);
-        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3(-transform.localScale.x * sightCheckBoxDistance, 0, 0), sightCheckBoxSize);
+        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3((initialFaceDirection == FaceDirection.right ? 1 : -1) * checkBoxDistance, 0, 0), checkBoxSize);
     }
 }
 /// <summary>
@@ -252,3 +230,4 @@ public enum EnemyState
     skill,
     attack,
 }
+public enum FaceDirection { left, right };
