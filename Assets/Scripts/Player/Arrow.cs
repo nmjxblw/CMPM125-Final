@@ -8,6 +8,7 @@ public class Arrow : MonoBehaviour
     public float destoryDistance;
     private Rigidbody2D rb;
     private Vector3 startPos;
+    public float rangerDirection;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +19,11 @@ public class Arrow : MonoBehaviour
     {
         Debug.Log("Arrow OnEnable");
         rb = GetComponent<Rigidbody2D>();
-        if (GameObject.FindGameObjectWithTag("Player").transform.localScale.x > 0)
+        if (rangerDirection > 0)
         { 
             rb.velocity = transform.right * speed; 
         }
-        else if (GameObject.FindGameObjectWithTag("Player").transform.localScale.x < 0)
+        else if (rangerDirection < 0)
         { 
             rb.velocity = transform.right * -speed;
             transform.localScale = new Vector3(-1, 1, 1);
