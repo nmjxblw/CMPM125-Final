@@ -3054,14 +3054,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5469398749323436108, guid: 8371398586c0f474e8c4d3ee7a18c18e, type: 3}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469398749323436108, guid: 8371398586c0f474e8c4d3ee7a18c18e, type: 3}
-      propertyPath: currentHealth
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28298,14 +28290,6 @@ PrefabInstance:
     - target: {fileID: 2872404259324142307, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
       propertyPath: m_Name
       value: Player Ranger
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872404259324142307, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259560542637593412, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7071124542835030972, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
       propertyPath: m_LocalPosition.x

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6408379601712440057}
   - component: {fileID: 3919350947831757017}
   - component: {fileID: 4777943836790514176}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Ranger
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
-  invulnerableDuration: 2
+  invulnerableDuration: 1
   invulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:
@@ -312,7 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5566023586588376371}
   - component: {fileID: 7485225736052931501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shoot
   m_TagString: Player
   m_Icon: {fileID: 0}
