@@ -14,12 +14,7 @@ public class Boar : Enemy
         base.Awake();
         patrolState = new BoarPatrolState();
         chaseState = new BoarChaseState();
-    }
-
-    protected override void TimeCounter()
-    {
-        UpdateWaitTimer();
-        base.TimeCounter();
+        idleState = new BoarIdleState();
     }
 
     protected override void FixedUpdate()
@@ -29,20 +24,6 @@ public class Boar : Enemy
             Move();
         }
         base.FixedUpdate();
-    }
-
-    protected override void UpdateWaitTimer()
-    {
-        if (wait)
-        {
-            waitTimeCounter -= Time.deltaTime;
-            if (waitTimeCounter <= 0)
-            {
-                wait = false;
-                waitTimeCounter = waitTime;
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            }
-        }
     }
 
     public override bool IsTargetInSight(){

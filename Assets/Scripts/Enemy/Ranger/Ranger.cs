@@ -21,6 +21,7 @@ public class Ranger : Enemy
         patrolState = new RangerPatrolState();
         chaseState = new RangerChaseState();
         attackState = new RangerAttackState();
+        idleState = new RangerIdleState();
     }
 
     protected override void FixedUpdate()
@@ -49,7 +50,15 @@ public class Ranger : Enemy
     {
         //Instantite the arrow prefab
         isAttack = true;
-        Debug.Log("Shoot Arrow");
+        GameObject arrow = EnemyArrowPool.SharedInstance.GetPooledObject();
+        arrow.GetComponent<EnemyArrow>().rangerDirection = transform.localScale.x;
+        if (arrow != null)
+        {
+            arrow.transform.position = transform.position + (Vector3)centerOffset + new Vector3(currentFaceDirection == FaceDirection.right? 2f:-2f , 0, 0);
+            arrow.transform.rotation = transform.rotation;
+
+            arrow.SetActive(true);
+        }
     }
 
     public override bool IsTargetInSight()

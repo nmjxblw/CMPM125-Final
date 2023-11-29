@@ -20,8 +20,7 @@ public class BoarPatrolState : BaseState
         if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.currentFaceDirection == FaceDirection.left) ||
          (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
         {
-            ((Boar)currentEnemy).wait = true;
-            currentEnemy.animator.SetBool("walk", false);
+            currentEnemy.SwitchState(EnemyState.idle);
         }
         else
         {

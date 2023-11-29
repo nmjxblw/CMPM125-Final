@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
     protected BaseState chaseState;
     protected BaseState attackState;
     protected BaseState skillState;
+    protected BaseState idleState;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,7 +62,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        currentState = patrolState;
+        currentState = idleState;
         currentState.OnEnter(this);
     }
     protected virtual void Update()
@@ -154,6 +155,7 @@ public class Enemy : MonoBehaviour
         enemyState = state;
         var newState = state switch
         {
+            EnemyState.idle => idleState,
             EnemyState.patrol => patrolState,
             EnemyState.chase => chaseState,
             EnemyState.skill => skillState,
@@ -194,6 +196,7 @@ public class Enemy : MonoBehaviour
         rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
         isHurt = false;
+        SwitchState(EnemyState.chase);
     }
 
     /// <summary>
@@ -225,6 +228,7 @@ public class Enemy : MonoBehaviour
 /// </summary>
 public enum EnemyState
 {
+    idle,
     patrol,
     chase,
     skill,
