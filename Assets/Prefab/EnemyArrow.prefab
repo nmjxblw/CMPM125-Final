@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1564655267195739315}
   - component: {fileID: 6049898565316345637}
   - component: {fileID: 4461463439290098330}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: EnemyArrow
   m_TagString: EnemyRanger
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
