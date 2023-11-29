@@ -14,6 +14,7 @@ public class Ranger : Enemy
     public float waitTimeCounter;
     public bool wait = false;
     public bool shoot = false;
+    public bool isAttack = false;
     protected override void Awake()
     {
         base.Awake();
@@ -47,6 +48,7 @@ public class Ranger : Enemy
     public void ShootArrow()
     {
         //Instantite the arrow prefab
+        isAttack = true;
         Debug.Log("Shoot Arrow");
     }
 

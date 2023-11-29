@@ -217,7 +217,7 @@ public class Enemy : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset, 0.2f);
-        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3((initialFaceDirection == FaceDirection.right ? 1 : -1) * checkBoxDistance, 0, 0), checkBoxSize);
+        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3((currentFaceDirection == FaceDirection.right ? 1 : -1) * checkBoxDistance, 0, 0), checkBoxSize);
     }
 }
 /// <summary>

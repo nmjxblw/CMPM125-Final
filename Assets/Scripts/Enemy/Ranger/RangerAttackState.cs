@@ -9,7 +9,6 @@ public class RangerAttackState : BaseState
         currentEnemy = enemy;
         currentEnemy.currentSpeed = 0;
         currentEnemy.animator.SetBool("attack", true);
-        Debug.Log("OnEnter AttackState success");
     }
 
     public override void LogicUpdate()
@@ -18,9 +17,6 @@ public class RangerAttackState : BaseState
         // else if the attack animation is done, switch to chase state
         if (currentEnemy.targetInSight && !currentEnemy.targetInAttackRange)
         {
-            // ||
-            // (currentEnemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Ranger_shoot") &&
-            // currentEnemy.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             currentEnemy.SwitchState(EnemyState.chase);
             return;
         }
@@ -30,8 +26,15 @@ public class RangerAttackState : BaseState
             currentEnemy.SwitchState(EnemyState.patrol);
             return;
         }
-        if(((Ranger)currentEnemy).shoot){
+        if (currentEnemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy Ranger Shoot") && !((Ranger)currentEnemy).isAttack && ((Ranger)currentEnemy).shoot)
+        {
             ((Ranger)currentEnemy).ShootArrow();
+        }
+        if (currentEnemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy Ranger Shoot") &&
+            currentEnemy.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            currentEnemy.SwitchState(EnemyState.patrol);
+            return;
         }
     }
     public override void PhysicsUpdate() { }

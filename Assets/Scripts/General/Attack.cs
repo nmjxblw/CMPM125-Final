@@ -10,9 +10,6 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            other.GetComponent<Character>()?.TakeDamage(this);
-        }
+        other.GetComponent<Character>()?.TakeDamage(this);
     }
 }
