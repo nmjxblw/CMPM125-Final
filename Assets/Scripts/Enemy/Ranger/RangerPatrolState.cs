@@ -9,37 +9,32 @@ public class RangerPatrolState : BaseState
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.patrolSpeed;
+        currentEnemy.animator.SetBool("run", true);
     }
 
     public override void LogicUpdate()
     {
-        // if the target is in sight but out of attack range, then switch to chase state
-        if (currentEnemy.targetInSight && !currentEnemy.targetInAttackRange && Mathf.Abs(currentEnemy.transform.position.y - currentEnemy.target.transform.position.y) <= 0.1f)
-        {
-            currentEnemy.SwitchState(EnemyState.chase);
-            return;
-        }
-        if (currentEnemy.targetInSight && currentEnemy.targetInAttackRange)
+        if (currentEnemy.targetInAttackRange && currentEnemy.targetChaseable)
         {
             currentEnemy.SwitchState(EnemyState.attack);
+            return;
+        }
+        else if (currentEnemy.targetChaseable)
+        {
+            currentEnemy.SwitchState(EnemyState.chase);
             return;
         }
         if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.currentFaceDirection == FaceDirection.left) ||
          (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
         {
-            ((Ranger)currentEnemy).wait = true;
-            currentEnemy.animator.SetBool("run", false);
             currentEnemy.SwitchState(EnemyState.idle);
-        }
-        else
-        {
-            currentEnemy.animator.SetBool("run", true);
         }
     }
     public override void PhysicsUpdate() { }
 
     public override void OnExit()
     {
+
         currentEnemy.animator.SetBool("run", false);
     }
 }

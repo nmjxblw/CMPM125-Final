@@ -25,7 +25,7 @@ public class PhysicsCheck : MonoBehaviour
     void Awake()
     {
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-        if(!manual)
+        if (!manual)
         {
             rightOffset = new Vector2(capsuleCollider.offset.x + capsuleCollider.size.x / 2, capsuleCollider.bounds.size.y / 2);
             leftOffset = new Vector2(capsuleCollider.offset.x - capsuleCollider.size.x / 2, rightOffset.y);
@@ -34,7 +34,7 @@ public class PhysicsCheck : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

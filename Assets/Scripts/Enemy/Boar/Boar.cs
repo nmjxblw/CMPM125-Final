@@ -15,6 +15,7 @@ public class Boar : Enemy
         patrolState = new BoarPatrolState();
         chaseState = new BoarChaseState();
         idleState = new BoarIdleState();
+        waitTimeCounter = waitTime;
     }
 
     protected override void FixedUpdate()

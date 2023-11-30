@@ -13,24 +13,21 @@ public class EnemyArrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Arrow Start");
     }
 
     void OnEnable()
     {
-        Debug.Log("Arrow OnEnable");
         rb = GetComponent<Rigidbody2D>();
         if (rangerDirection > 0)
-        { 
-            rb.velocity = transform.right * speed; 
+        {
+            rb.velocity = transform.right * speed;
         }
         else if (rangerDirection < 0)
-        { 
+        {
             rb.velocity = transform.right * -speed;
             transform.localScale = new Vector3(-1, 1, 1);
         }
         startPos = transform.position;
-        Debug.Log(rb.velocity);
     }
 
     // Update is called once per frame

@@ -26,6 +26,7 @@ public class ArrowPool : MonoBehaviour
             tmp = Instantiate(arrowToPool);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
+            tmp.transform.parent = transform;
         }
     }
 

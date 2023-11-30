@@ -26,6 +26,7 @@ public class EnemyArrowPool : MonoBehaviour
             tmp = Instantiate(arrowToPool);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
+            tmp.transform.parent = transform;
         }
     }
 
@@ -37,7 +38,6 @@ public class EnemyArrowPool : MonoBehaviour
 
     public GameObject GetPooledObject()
     {
-        Debug.Log("GetPooledObject");
         for (int i = 0; i < pooledObjects.Count; i++)
         {
             if (!pooledObjects[i].activeInHierarchy)

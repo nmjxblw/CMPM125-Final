@@ -8,6 +8,7 @@ public class BoarPatrolState : BaseState
     {
         currentEnemy = enemy as Boar;
         currentEnemy.currentSpeed = currentEnemy.patrolSpeed;
+        currentEnemy.animator.SetBool("walk", true);
     }
 
     public override void LogicUpdate()
@@ -21,10 +22,6 @@ public class BoarPatrolState : BaseState
          (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
         {
             currentEnemy.SwitchState(EnemyState.idle);
-        }
-        else
-        {
-            currentEnemy.animator.SetBool("walk", true);
         }
     }
     public override void PhysicsUpdate() { }

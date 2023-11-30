@@ -22,15 +22,17 @@ public class Enemy : MonoBehaviour
     public float hurtForce;
 
     [Header("Hitbox Check")]
-    [Tooltip("This is the offset from the center of the enemy to the attack point.")]
     public Vector2 centerOffset;
-    [Tooltip("The hitbox size of the enemy's sight.")]
     public Vector2 checkBoxSize;
-    [Tooltip("The distance of the enemy's sight hitbox.")]
     public float checkBoxDistance;
-    public LayerMask attackLayer;
+    public LayerMask targetLayer;
+    [Header("Target Check")]
     public bool targetInSight = false;
     public bool targetInAttackRange = false;
+    public bool targetChaseable = false;
+    [Header("Target Around Distance and Check")]
+    public float targetAroundDistance = 4f;
+    public bool targetAround = false;
 
     [Header("Timer For Check Lost Target")]
     public GameObject target;
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour
     protected BaseState attackState;
     protected BaseState skillState;
     protected BaseState idleState;
+    protected BaseState dodgeState;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -86,36 +89,35 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Move()
     {
-        moveDirection = currentFaceDirection == FaceDirection.left ? new Vector2(-1, moveDirection.y) : new Vector2(1, moveDirection.y);
+        moveDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, moveDirection.y);
         rb.velocity = new Vector2(currentSpeed * Time.deltaTime * moveDirection.x, rb.velocity.y);
     }
 
+    /// <summary>
+    /// This function is called in Update() to get target information.
+    /// </summary>
     protected virtual void UpdateTargetInformation()
     {
         target = GameObject.FindGameObjectWithTag("Player");
         IsTargetInSight();
         IsTargetInAttackRange();
+        IsTargetChaseable();
+        IsTargetAround();
     }
 
     /// <summary>
-    /// Update the time counter for the wait time
+    /// Update the time counters
     /// </summary>
     protected virtual void TimeCounter()
     {
-        UpdateWaitTimer();
         UpdateLostTargetTimer();
     }
 
-    protected virtual void UpdateWaitTimer()
-    {
-        //Just provide a default implementation for the wait timer
-        //For some enemies, they don't have 
-        return;
-    }
-
-    // If target is not in the sight for a certain time, 
-    // set lostTarget to true and set the timer to 0 .
-    // otherwise, set the timer to the lostTargetTime. And set lostTarget to false.
+    /// <summary>
+    /// If target is not in the sight for a certain time, 
+    /// set lostTarget to true and set the timer to 0 .
+    /// otherwise, set the timer to the lostTargetTime. And set lostTarget to false. 
+    /// </summary>
     protected virtual void UpdateLostTargetTimer()
     {
         if (!targetInSight)
@@ -130,12 +132,18 @@ public class Enemy : MonoBehaviour
         lostTarget = lostTargetTimeCounter == 0;
     }
 
-    // the hitbox to sumulate the attack range or sight
+    /// <summary>
+    /// the hitbox to sumulate the attack range or sight
+    /// </summary>
+    /// <returns>the bool for result </returns>
     protected bool IsHitBox()
     {
-        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, checkBoxSize, 0, moveDirection, checkBoxDistance, attackLayer);
+        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, checkBoxSize, 0, moveDirection, checkBoxDistance, targetLayer);
     }
-
+    /// <summary>
+    /// Check if the target is in attack range also update the targetInAttackRange to true or false.
+    /// </summary>
+    /// <returns>targetInAttackRange</returns>
     public virtual bool IsTargetInAttackRange()
     {
         return targetInAttackRange = false;
@@ -149,7 +157,20 @@ public class Enemy : MonoBehaviour
     {
         return targetInSight = false;
     }
+    public virtual bool IsTargetChaseable()
+    {
+        return targetChaseable = targetInSight && Mathf.Abs(transform.position.y - target.transform.position.y) <= 0.1f;
+    }
+    public virtual bool IsTargetAround()
+    {
+        return targetAround = Vector3.Distance(target.transform.position, transform.position) < targetAroundDistance;
+
+    }
 #endif
+    /// <summary>
+    /// Switch the state of the enemy.
+    /// </summary>
+    /// <param name="state">the state to switch</param>
     public void SwitchState(EnemyState state)
     {
         enemyState = state;
@@ -160,6 +181,7 @@ public class Enemy : MonoBehaviour
             EnemyState.chase => chaseState,
             EnemyState.skill => skillState,
             EnemyState.attack => attackState,
+            EnemyState.dodge => dodgeState,
             _ => null,
         };
         currentState.OnExit();
@@ -233,5 +255,6 @@ public enum EnemyState
     chase,
     skill,
     attack,
+    dodge
 }
 public enum FaceDirection { left, right };
