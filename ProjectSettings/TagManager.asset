@@ -7,7 +7,7 @@ TagManager:
   - Soldier
   - Boar
   - PlayerShoot
-  - EnemyRanger
+  - Ranger
   layers:
   - Default
   - TransparentFX

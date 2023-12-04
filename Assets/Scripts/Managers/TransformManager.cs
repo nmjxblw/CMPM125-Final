@@ -11,8 +11,14 @@ public class TransformManager : MonoBehaviour
     public PlayerInputControl inputControl;
 
     public GameObject currentPlayer;
-    public GameObject soldierPrefab;
+    public GameObject slimePrefab;
     public GameObject BoarPrefab;
+    public GameObject soldierPrefab;
+    public GameObject RangerPrefab;
+
+    public bool isLookingBoar;
+    public bool isLookingSoldier;
+    public bool isLookingRanger;
 
     public string hitTag;
 

@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5a343bb42bfb7409f165c42ca12011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 5
+  raycastDistance: 20
 --- !u!114 &484206062759749935
 MonoBehaviour:
   m_ObjectHideFlags: 0

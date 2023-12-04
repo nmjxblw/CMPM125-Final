@@ -759,12 +759,14 @@ MonoBehaviour:
   centerOffset: {x: 0, y: 1.5}
   checkBoxSize: {x: 6, y: 1}
   checkBoxDistance: 4
-  attackLayer:
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   targetInSight: 0
   targetInAttackRange: 0
   targetChaseable: 0
+  targetAroundDistance: 4
+  targetAround: 0
   target: {fileID: 0}
   lostTargetTime: 3
   lostTargetTimeCounter: 3
@@ -780,7 +782,6 @@ MonoBehaviour:
   shoot: 0
   isAttack: 0
   dodgeSpeed: 0
-  targetAround: 0
   isDodge: 0
 --- !u!114 &7871851835137293125
 MonoBehaviour:
