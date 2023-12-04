@@ -10,11 +10,17 @@ public class SoldierIdleState : BaseState
         ((Soldier)currentEnemy).wait = true;
         ((Soldier)currentEnemy).waitTimeCounter = ((Soldier)currentEnemy).waitTime;
         currentEnemy.animator.SetBool("run", false);
-        currentEnemy.animator.SetBool("attack", false);
+        currentEnemy.animator.SetBool("isAttack", false);
     }
 
     public override void LogicUpdate()
     {
+        if(currentEnemy.targetChaseable&& currentEnemy.targetInAttackRange){
+            currentEnemy.SwitchState(EnemyState.attack);
+        }
+        else if(currentEnemy.targetChaseable){
+            currentEnemy.SwitchState(EnemyState.chase);
+        }
         if (((Soldier)currentEnemy).wait)
         {
             ((Soldier)currentEnemy).waitTimeCounter -= Time.deltaTime;

@@ -488,6 +488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 1070343258200819532, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4295362601373264351, guid: 219c04b75ea6b474997f98aea9106464, type: 3}
       propertyPath: m_LocalPosition.x
       value: 40.29
@@ -1077,7 +1081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &978528232
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1250,8 +1254,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.17818, y: 0.64659}
-  m_Size: {x: 1.829902, y: 1.283469}
+  m_Offset: {x: -0.097313695, y: 0.64658993}
+  m_Size: {x: 1.4623374, y: 1.2834691}
   m_Direction: 1
 --- !u!114 &978528237
 MonoBehaviour:
@@ -1271,6 +1275,7 @@ MonoBehaviour:
   chaseSpeed: 260
   currentSpeed: 0
   initialFaceDirection: 0
+  initialLocalScale: {x: 0, y: 0, z: 0}
   currentFaceDirection: 0
   moveDirection: {x: 0, y: 0}
   attacker: {fileID: 0}
@@ -2306,6 +2311,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db0f8c5d4b7982a4ba4ccefbe586a0fc, type: 3}
+--- !u!1 &1954634283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1954634284}
+  - component: {fileID: 1954634285}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1954634284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954634283}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.06724, y: 5.0202603, z: -0.93170166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954634285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954634283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f4002e672b14ef4fb90fad839a88a6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2037703777
 GameObject:
   m_ObjectHideFlags: 0
@@ -27327,6 +27376,7 @@ MonoBehaviour:
   chaseSpeed: 200
   currentSpeed: 0
   initialFaceDirection: 1
+  initialLocalScale: {x: 0, y: 0, z: 0}
   currentFaceDirection: 1
   moveDirection: {x: 0, y: 0}
   attacker: {fileID: 0}
@@ -27999,6 +28049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 8060970009953460395, guid: 4dc8a152f86659a4c82638edcf8cc611, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28139,7 +28193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &5788969124326801884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28216,6 +28270,10 @@ PrefabInstance:
     - target: {fileID: 2872404259324142307, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
       propertyPath: m_Name
       value: Player Ranger
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872404259324142307, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7071124542835030972, guid: c070bdf39380d1e48bb6c7350bb63382, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28637,3 +28695,4 @@ SceneRoots:
   - {fileID: 9154680772520294335}
   - {fileID: 2760102685090847692}
   - {fileID: 1372502732}
+  - {fileID: 1954634284}

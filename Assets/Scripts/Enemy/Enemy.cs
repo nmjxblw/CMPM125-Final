@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    Rigidbody2D rb;
+    protected Rigidbody2D rb;
     [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
     [Header("Enemy Basic parameters")]
@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float currentSpeed;
 
     public FaceDirection initialFaceDirection;
+    [HideInInspector] public Vector3 initialLocalScale;
     public FaceDirection currentFaceDirection;
     [HideInInspector] public Vector2 moveDirection = Vector2.zero;
     [HideInInspector] public Transform attacker;
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         currentFaceDirection = initialFaceDirection;
+        initialLocalScale = transform.localScale;
     }
 
     protected virtual void OnEnable()
@@ -70,7 +72,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Update()
     {
-        currentFaceDirection = transform.localScale.x > 0 ? initialFaceDirection : initialFaceDirection == FaceDirection.left ? FaceDirection.right : FaceDirection.left;
+        currentFaceDirection = transform.localScale.x * initialLocalScale.x > 0 ? initialFaceDirection : initialFaceDirection == FaceDirection.left ? FaceDirection.right : FaceDirection.left;
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         UpdateTargetInformation();
         currentState.LogicUpdate();
@@ -89,7 +91,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Move()
     {
-        moveDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, moveDirection.y);
+        moveDirection = new Vector2(currentFaceDirection == FaceDirection.right ? 1 : -1, moveDirection.y);
         rb.velocity = new Vector2(currentSpeed * Time.deltaTime * moveDirection.x, rb.velocity.y);
     }
 
@@ -100,6 +102,7 @@ public class Enemy : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player");
         IsTargetInSight();
+        IsLostTarget();
         IsTargetInAttackRange();
         IsTargetChaseable();
         IsTargetAround();
@@ -110,7 +113,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void TimeCounter()
     {
-        UpdateLostTargetTimer();
+        return;
     }
 
     /// <summary>
@@ -118,7 +121,7 @@ public class Enemy : MonoBehaviour
     /// set lostTarget to true and set the timer to 0 .
     /// otherwise, set the timer to the lostTargetTime. And set lostTarget to false. 
     /// </summary>
-    protected virtual void UpdateLostTargetTimer()
+    protected virtual void IsLostTarget()
     {
         if (!targetInSight)
         {

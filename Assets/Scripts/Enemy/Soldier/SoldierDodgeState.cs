@@ -6,6 +6,7 @@ public class SoldierDodgeState : BaseState
     public override void OnEnter(Enemy enemy)
     {
         currentEnemy = enemy;
+        currentEnemy.currentSpeed = 0f;
         ((Soldier)currentEnemy).isDodge = true;
     }
 

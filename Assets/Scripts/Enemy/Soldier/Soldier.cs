@@ -31,9 +31,17 @@ public class Soldier : Enemy
         idleState = new SoldierIdleState();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        animator.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
+        animator.SetFloat("velocityY", rb.velocity.y);
+        animator.SetBool("isGround", physicsCheck.isGrounded);
+    }
+
     protected override void FixedUpdate()
     {
-        if (!isHurt && !isDead && !wait && !isDodge && !isAttack)
+        if (!isHurt && !isDead)
         {
             Move();
         }

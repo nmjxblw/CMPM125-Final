@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.iOS;
 using UnityEngine;
 
 public class RaycastCheck : MonoBehaviour
@@ -52,7 +51,6 @@ public class RaycastCheck : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.tag);
             if (hit.collider.CompareTag("Soldier"))
             {
 
