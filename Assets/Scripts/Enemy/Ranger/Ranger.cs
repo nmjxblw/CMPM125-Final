@@ -26,6 +26,7 @@ public class Ranger : Enemy
         chaseState = new RangerChaseState();
         attackState = new RangerAttackState();
         idleState = new RangerIdleState();
+        
         dodgeState = new RangerDodgeState();
         waitTimeCounter = waitTime;
         dodgeSpeed = chaseSpeed * 2f;
@@ -41,7 +42,6 @@ public class Ranger : Enemy
 
     public void ShootArrow()
     {
-        // Debug.Log("Shoot an arrow");
         //Instantite the arrow prefab
         isAttack = true;
         GameObject arrow = EnemyArrowPool.SharedInstance.GetPooledObject();

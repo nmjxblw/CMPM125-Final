@@ -19,6 +19,7 @@ public class Arrow : MonoBehaviour
     {
         Debug.Log("Arrow OnEnable");
         rb = GetComponent<Rigidbody2D>();
+        transform.localScale = new Vector3(1, 1, 1);
         if (rangerDirection > 0)
         { 
             rb.velocity = transform.right * speed; 
@@ -38,6 +39,7 @@ public class Arrow : MonoBehaviour
         float distance = Vector3.Distance(startPos, transform.position);
         if (distance > destoryDistance)
         {
+            
             gameObject.SetActive(false);
         }
     }

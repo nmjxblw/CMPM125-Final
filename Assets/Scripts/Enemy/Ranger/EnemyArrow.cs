@@ -18,6 +18,7 @@ public class EnemyArrow : MonoBehaviour
     void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
+        transform.localScale = new Vector3(1, 1, 1);
         if (rangerDirection > 0)
         {
             rb.velocity = transform.right * speed;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    protected Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
     [Header("Enemy Basic parameters")]
@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     public bool targetInSight = false;
     public bool targetInAttackRange = false;
     public bool targetChaseable = false;
+    public bool targetAtBack = false;
     [Header("Target Around Distance and Check")]
     public float targetAroundDistance = 4f;
     public bool targetAround = false;
@@ -106,6 +107,7 @@ public class Enemy : MonoBehaviour
         IsTargetInAttackRange();
         IsTargetChaseable();
         IsTargetAround();
+        IsTargetAtBack();
     }
 
     /// <summary>
@@ -162,12 +164,16 @@ public class Enemy : MonoBehaviour
     }
     public virtual bool IsTargetChaseable()
     {
-        return targetChaseable = targetInSight && Mathf.Abs(transform.position.y - target.transform.position.y) <= 0.1f;
+        return targetChaseable = targetInSight && Mathf.Abs(transform.position.y - target.transform.position.y) <= 0.2f;
     }
     public virtual bool IsTargetAround()
     {
         return targetAround = Vector3.Distance(target.transform.position, transform.position) < targetAroundDistance;
-
+    }
+    public virtual bool IsTargetAtBack()
+    {
+        return targetAtBack = (transform.position.x > target.transform.position.x && currentFaceDirection == FaceDirection.right) ||
+            (transform.position.x < target.transform.position.x && currentFaceDirection == FaceDirection.left);
     }
 #endif
     /// <summary>

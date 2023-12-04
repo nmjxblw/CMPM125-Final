@@ -23,4 +23,12 @@ public class PlayerRangerController : PlayerController
         base.PlayerAttack(context);
 
     }
+
+    protected override void Jump(InputAction.CallbackContext obj)
+    {
+        if (physicsCheck.isGrounded && !isAttack)
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
 }

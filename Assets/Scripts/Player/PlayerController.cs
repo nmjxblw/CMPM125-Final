@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection;
     protected Rigidbody2D rb;
 
-    private PhysicsCheck physicsCheck;
+    protected PhysicsCheck physicsCheck;
 
     private float originLocalScaleX;
 
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Attack.started += PlayerAttack;
     }
 
-    private void Jump(InputAction.CallbackContext obj)
+    protected virtual void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGrounded)
         {
