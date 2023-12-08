@@ -7,15 +7,18 @@ public class Trap : Attack
     [Header("Trap Basic Parameters")]
     public bool isMove;
     public bool isDamage;
+    public bool needCheckPlayerRange;
 
     [Header("Trap Movement")]
     public bool isVertical;
     public bool isHorizontal;
     public bool isLooping;
+    public bool isDestroy;
     public float verDistance;
     public float verSpeed;
     public float horDistance;
     public float horSpeed;
+    public float activationDistance = 5f;
 
     private Vector3 startPosition;
     private Vector3 verDirection;
@@ -26,15 +29,29 @@ public class Trap : Attack
     void Start()
     {
         startPosition = transform.position;
-        verDirection = Vector3.up * Mathf.Sign(verDistance); // 垂直移动方向
-        horDirection = Vector3.right * Mathf.Sign(horDistance); // 水平移动方向
+        verDirection = Vector3.up * Mathf.Sign(verDistance);
+        horDirection = Vector3.right * Mathf.Sign(horDistance);
         endPosition = startPosition + (isVertical ? verDirection * Mathf.Abs(verDistance) : horDirection * Mathf.Abs(horDistance));
-        movingToEnd = true; // 初始设置为移动到终点
+        movingToEnd = true;
+        isMove = !needCheckPlayerRange;
     }
 
     void Update()
     {
-        MoveTrap();
+        if (needCheckPlayerRange) { CheckPlayerDistance(); }
+
+        if (isMove) { MoveTrap(); }
+    }
+
+    private void CheckPlayerDistance()
+    {
+        if (TransformManager.Instance.currentPlayer != null)
+        {
+            float distanceX = Mathf.Abs(transform.position.x - TransformManager.Instance.currentPlayer.transform.position.x);
+
+            isMove = distanceX <= activationDistance;
+            needCheckPlayerRange = !isMove;
+        }
     }
 
     private void MoveTrap()
@@ -49,21 +66,42 @@ public class Trap : Attack
         {
             if (isLooping)
             {
-                movingToEnd = !movingToEnd; // 往复移动时改变方向
+                movingToEnd = !movingToEnd;
+            }
+            else if (isDestroy)
+            {
+                Destroy(gameObject);
             }
             else
             {
-                transform.position = startPosition; // 非往复移动时立即返回起点
+                transform.position = startPosition;
             }
         }
     }
 
-    protected virtual void OnTriggerStay2D(Collider2D other)
+    protected override void OnTriggerStay2D(Collider2D other)
     {
-        if (isDamage) { 
+        if (isDamage)
+        {
             other.GetComponent<Character>()?.TakeDamage(this);
         }
-       
+
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.transform.parent = transform;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.transform.parent = null;
+        }
     }
 
 }

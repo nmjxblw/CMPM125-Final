@@ -79,9 +79,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1580282823
+  m_SortingLayer: 2
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f5e7ad9e08f4a294f8736a1b3ec9ad7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   inputDirection: {x: 0, y: 0}
   speed: 250
   jumpForce: 13
-  hurtForce: 6
+  hurtForce: 1
   isHurt: 0
   isDead: 0
   isAttack: 0
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
-  invulnerableDuration: 1
+  invulnerableDuration: 0.5
   invulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:

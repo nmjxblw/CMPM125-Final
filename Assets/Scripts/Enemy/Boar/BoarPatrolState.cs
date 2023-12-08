@@ -18,8 +18,7 @@ public class BoarPatrolState : BaseState
             currentEnemy.SwitchState(EnemyState.chase);
             return;
         }
-        if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.currentFaceDirection == FaceDirection.left) ||
-         (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
+        if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.IsFaceAgainstWall()))
         {
             currentEnemy.SwitchState(EnemyState.idle);
         }

@@ -9,16 +9,21 @@ public class SoldierIdleState : BaseState
         currentEnemy.currentSpeed = 0f;
         ((Soldier)currentEnemy).wait = true;
         ((Soldier)currentEnemy).waitTimeCounter = ((Soldier)currentEnemy).waitTime;
-        currentEnemy.animator.SetBool("run", false);
-        currentEnemy.animator.SetBool("isAttack", false);
     }
 
     public override void LogicUpdate()
     {
-        if(currentEnemy.targetChaseable&& currentEnemy.targetInAttackRange){
+        if (((Soldier)currentEnemy).triggerDodge && ((Soldier)currentEnemy).dodgeTimer == 0)
+        {
+            currentEnemy.SwitchState(EnemyState.dodge);
+            return;
+        }
+        if (currentEnemy.targetChaseable && currentEnemy.targetInAttackRange)
+        {
             currentEnemy.SwitchState(EnemyState.attack);
         }
-        else if(currentEnemy.targetChaseable){
+        else if (currentEnemy.targetChaseable)
+        {
             currentEnemy.SwitchState(EnemyState.chase);
         }
         if (((Soldier)currentEnemy).wait)

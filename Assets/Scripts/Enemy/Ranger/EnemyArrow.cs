@@ -31,6 +31,14 @@ public class EnemyArrow : MonoBehaviour
         startPos = transform.position;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {

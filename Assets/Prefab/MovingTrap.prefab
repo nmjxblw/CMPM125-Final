@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: isDamage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 333656298687269107, guid: 5619ba1551e6ffe41b17b0d4e8a4a4a9, type: 3}
+      propertyPath: isDestroy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 333656298687269107, guid: 5619ba1551e6ffe41b17b0d4e8a4a4a9, type: 3}
+      propertyPath: needCheckPlayerRange
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 372445821068532753, guid: 5619ba1551e6ffe41b17b0d4e8a4a4a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

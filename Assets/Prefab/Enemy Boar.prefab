@@ -24,7 +24,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &674689929782892088
 Transform:
   m_ObjectHideFlags: 0
@@ -256,11 +256,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78359932ba44aee4794be56c98e8cf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetInSight: 0
+  targetInAttackRange: 0
+  targetChaseable: 0
+  targetAtBack: 0
+  targetAround: 0
+  touchWall: 0
+  faceAgainstWall: 0
+  isHurt: 0
+  isDead: 0
+  enemyState: 0
   rb: {fileID: 0}
   physicsCheck: {fileID: 0}
   animator: {fileID: 0}
   patrolSpeed: 100
-  chaseSpeed: 260
+  chaseSpeed: 400
   currentSpeed: 0
   initialFaceDirection: 0
   initialLocalScale: {x: 0, y: 0, z: 0}
@@ -274,18 +285,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  targetInSight: 0
-  targetInAttackRange: 0
-  targetChaseable: 0
-  targetAtBack: 0
   targetAroundDistance: 4
-  targetAround: 0
-  target: {fileID: 0}
   lostTargetTime: 3
   lostTargetTimeCounter: 3
-  isHurt: 0
-  isDead: 0
-  enemyState: 0
   waitTime: 2
   waitTimeCounter: 2
   wait: 0
@@ -437,6 +439,14 @@ PrefabInstance:
     - target: {fileID: 3245225477851411992, guid: db0f8c5d4b7982a4ba4ccefbe586a0fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265587303214074369, guid: db0f8c5d4b7982a4ba4ccefbe586a0fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265587303214074369, guid: db0f8c5d4b7982a4ba4ccefbe586a0fc, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1580282823
       objectReference: {fileID: 0}
     - target: {fileID: 4515878021775513549, guid: db0f8c5d4b7982a4ba4ccefbe586a0fc, type: 3}
       propertyPath: m_Name

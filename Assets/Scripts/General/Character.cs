@@ -39,17 +39,15 @@ public class Character : MonoBehaviour
         {
             return;
         }
-
-        if (currentHealth - attacker.damage > 0)
+        currentHealth = Mathf.Clamp((currentHealth - attacker.damage), 0, maxHealth);
+        if (currentHealth > 0)
         {
-            currentHealth -= attacker.damage;
             TriggerInvulnerable();
             //触发受伤
             OnTakeDamage?.Invoke(attacker.transform);
         }
         else
         {
-            currentHealth = 0;
             //触发死亡
             OnDeath?.Invoke();
         }

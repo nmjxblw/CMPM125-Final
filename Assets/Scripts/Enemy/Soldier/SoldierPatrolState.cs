@@ -7,18 +7,33 @@ public class SoldierPatrolState : BaseState
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.patrolSpeed;
-        currentEnemy.animator.SetBool("run", true);
     }
 
     public override void LogicUpdate()
     {
-        if(currentEnemy.targetChaseable){
+        if (((Soldier)currentEnemy).triggerDodge && ((Soldier)currentEnemy).dodgeTimer == 0)
+        {
+            currentEnemy.SwitchState(EnemyState.dodge);
+            return;
+        }
+        if (currentEnemy.targetChaseable && currentEnemy.targetInAttackRange)
+        {
+            currentEnemy.SwitchState(EnemyState.attack);
+            return;
+        }
+        else if (currentEnemy.targetChaseable)
+        {
             currentEnemy.SwitchState(EnemyState.chase);
+            return;
+        }
+        else if (!currentEnemy.physicsCheck.isGrounded || (currentEnemy.physicsCheck.touchLeftWall && currentEnemy.currentFaceDirection == FaceDirection.left) ||
+         (currentEnemy.physicsCheck.touchRightWall && currentEnemy.currentFaceDirection == FaceDirection.right))
+        {
+            currentEnemy.SwitchState(EnemyState.idle);
         }
     }
     public override void PhysicsUpdate() { }
     public override void OnExit()
     {
-        currentEnemy.animator.SetBool("run", false);
     }
 }

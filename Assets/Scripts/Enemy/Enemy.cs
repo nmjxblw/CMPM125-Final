@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -6,11 +7,26 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Target")]
+    public GameObject target;
+    [Header("Target Debug Check")]
+    public bool targetInSight = false;
+    public bool targetInAttackRange = false;
+    public bool targetChaseable = false;
+    public bool targetAtBack = false;
+    public bool targetAround = false;
+    protected bool lostTarget = false;
+    public bool touchWall = false;
+    public bool faceAgainstWall = false;
+    [Header("Current State For Debug")]
+    public bool isHurt;
+    public bool isDead;
+    public EnemyState enemyState;
 
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator animator;
-    [Header("Enemy Basic parameters")]
+    [Header("Enemy Basic Parameters")]
     public float patrolSpeed;
     public float chaseSpeed;
     [HideInInspector] public float currentSpeed;
@@ -22,30 +38,22 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Transform attacker;
     public float hurtForce;
 
-    [Header("Hitbox Check")]
+
+    [Header("Hitbox Setting")]
     public Vector2 centerOffset;
     public Vector2 checkBoxSize;
     public float checkBoxDistance;
     public LayerMask targetLayer;
-    [Header("Target Check")]
-    public bool targetInSight = false;
-    public bool targetInAttackRange = false;
-    public bool targetChaseable = false;
-    public bool targetAtBack = false;
-    [Header("Target Around Distance and Check")]
-    public float targetAroundDistance = 4f;
-    public bool targetAround = false;
 
-    [Header("Timer For Check Lost Target")]
-    public GameObject target;
+
+    [Header("Target Around Distance Setting")]
+    [Range(0f, 10f)] public float targetAroundDistance = 4f;
+
+    [Header("Lost Target Timer Setting")]
     public float lostTargetTime;
     public float lostTargetTimeCounter;
-    private bool lostTarget = false;
 
-    [Header("Enemy State")]
-    public bool isHurt;
-    public bool isDead;
-    public EnemyState enemyState;
+
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
@@ -101,7 +109,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void UpdateTargetInformation()
     {
-        target = GameObject.FindGameObjectWithTag("Player");
+        target = GameObject.FindWithTag("Player");
         IsTargetInSight();
         IsLostTarget();
         IsTargetInAttackRange();
@@ -162,9 +170,17 @@ public class Enemy : MonoBehaviour
     {
         return targetInSight = false;
     }
+    public virtual bool IsTouchWall()
+    {
+        return touchWall = physicsCheck.touchLeftWall || physicsCheck.touchRightWall;
+    }
+    public virtual bool IsFaceAgainstWall()
+    {
+        return faceAgainstWall = (physicsCheck.touchLeftWall && currentFaceDirection == FaceDirection.left) || (physicsCheck.touchRightWall && currentFaceDirection == FaceDirection.right);
+    }
     public virtual bool IsTargetChaseable()
     {
-        return targetChaseable = targetInSight && Mathf.Abs(transform.position.y - target.transform.position.y) <= 0.2f;
+        return targetChaseable = !IsFaceAgainstWall() && physicsCheck.isGrounded && targetInSight && Mathf.Abs(transform.position.y - target.transform.position.y) <= 0.2f;
     }
     public virtual bool IsTargetAround()
     {
@@ -200,9 +216,8 @@ public class Enemy : MonoBehaviour
     #region events
     public void OnTakenDamage(Transform attackTrans)
     {
-        attacker = attackTrans;
         //Turn to face attacker
-        if ((attackTrans.position.x > transform.position.x && currentFaceDirection == FaceDirection.left) || (attackTrans.position.x < transform.position.x && currentFaceDirection == FaceDirection.right))
+        if ((target.transform.position.x > transform.position.x && currentFaceDirection == FaceDirection.left) || (target.transform.position.x < transform.position.x && currentFaceDirection == FaceDirection.right))
         {
             //attacker is on the back
             //face to the attacker

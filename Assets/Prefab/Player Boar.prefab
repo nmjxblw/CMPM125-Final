@@ -161,7 +161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &487113080940604131
 Transform:
   m_ObjectHideFlags: 0
@@ -328,11 +328,11 @@ MonoBehaviour:
   inputDirection: {x: 0, y: 0}
   speed: 150
   jumpForce: 5
-  hurtForce: 0
+  hurtForce: 1
   isHurt: 0
   isDead: 0
   isAttack: 0
-  runSpeed: 300
+  runSpeed: 450
 --- !u!114 &946182246422423781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
-  invulnerableDuration: 2
+  invulnerableDuration: 0.5
   invulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:

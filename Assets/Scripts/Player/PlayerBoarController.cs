@@ -25,4 +25,13 @@ public class PlayerBoarController : PlayerController
         isAttack = false;
     }
 
+    protected override void FixedUpdate()
+    {
+        if (!isHurt)
+        {
+            Move();
+        }
+    }
+    
+
 }

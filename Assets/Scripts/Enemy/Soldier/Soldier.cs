@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Soldier : Enemy
 {
+    [Header("Enemy Soldier Debug Check")]
+    public bool wait = false;
+    public bool isAttack = false;
+    public bool arrowInSight = false;
+    public bool isJump = false;
+    public bool isDodge = false;
     [Header("Soldier Setting")]
     public Vector2 soldierSightOffset = new Vector2(0f, 1.7f);
     [Header("Soldier View Setting")]
@@ -13,14 +19,18 @@ public class Soldier : Enemy
     public float waitTime = 2f;
     public float waitTimeCounter = 2f;
     [Header("Soldier Properties Checker")]
-    public bool wait = false;
-    public bool shoot = false;
-    public bool isAttack = false;
+    public float attackCooldown = 2f;
+    public float attackTimer = 2f;
+
     [Header("Soldier Dodge Setting")]
-    public float jumpForce = 5f;
-    public bool isJump = false;
+    public LayerMask arrowLayer = new LayerMask();
+    public float dodgeCooldown = 5f;
+    public float dodgeTimer = 5f;
+    public float jumpForce = 7f;
     public float dodgeForce = 5f;
-    public bool isDodge = false;
+    public float friction = 3f;
+    public bool triggerDodge;
+
 
     protected override void Awake()
     {
@@ -29,19 +39,25 @@ public class Soldier : Enemy
         chaseState = new SoldierChaseState();
         attackState = new SoldierAttackState();
         idleState = new SoldierIdleState();
+        dodgeState = new SoldierDodgeState();
+        dodgeTimer = dodgeCooldown;
     }
 
     protected override void Update()
     {
+        IsArrowInSight();
+        triggerDodge = (targetAround && TransformManager.Instance.currentPlayer.GetComponent<PlayerController>().isAttack) || arrowInSight;
         base.Update();
-        animator.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
-        animator.SetFloat("velocityY", rb.velocity.y);
+        animator.SetFloat("vx", Mathf.Abs(rb.velocity.x));
+        animator.SetFloat("vy", rb.velocity.y);
         animator.SetBool("isGround", physicsCheck.isGrounded);
+        dodgeTimer = Mathf.Clamp((dodgeTimer - Time.deltaTime), 0, dodgeCooldown);
+        attackTimer = Mathf.Clamp((attackTimer - Time.deltaTime), 0, attackCooldown);
     }
 
     protected override void FixedUpdate()
     {
-        if (!isHurt && !isDead)
+        if (!isHurt && !isDead && !isDodge)
         {
             Move();
         }
@@ -76,5 +92,10 @@ public class Soldier : Enemy
     public override bool IsTargetInAttackRange()
     {
         return targetInAttackRange = IsHitBox();
+    }
+
+    public bool IsArrowInSight()
+    {
+        return arrowInSight = Physics2D.BoxCast(transform.position + (Vector3)centerOffset, new Vector2(8f, 2f), 0, moveDirection, 4f, arrowLayer);
     }
 }

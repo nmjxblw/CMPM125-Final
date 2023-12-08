@@ -287,8 +287,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1580282823
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f5e7ad9e08f4a294f8736a1b3ec9ad7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -441,6 +441,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a901c8ac8d065448b2a5cbc8421241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetInSight: 0
+  targetInAttackRange: 0
+  targetChaseable: 0
+  targetAtBack: 0
+  targetAround: 0
+  touchWall: 0
+  faceAgainstWall: 0
+  isHurt: 0
+  isDead: 0
+  enemyState: 0
   rb: {fileID: 0}
   physicsCheck: {fileID: 0}
   animator: {fileID: 0}
@@ -453,24 +464,15 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   attacker: {fileID: 0}
   hurtForce: 5
-  centerOffset: {x: 0, y: 1.5}
-  checkBoxSize: {x: 8, y: 1}
-  checkBoxDistance: 5
+  centerOffset: {x: 0, y: 1}
+  checkBoxSize: {x: 8, y: 2}
+  checkBoxDistance: 4
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  targetInSight: 0
-  targetInAttackRange: 0
-  targetChaseable: 0
-  targetAtBack: 0
   targetAroundDistance: 4
-  targetAround: 0
-  target: {fileID: 0}
   lostTargetTime: 3
   lostTargetTimeCounter: 3
-  isHurt: 0
-  isDead: 0
-  enemyState: 0
   rangerSightOffset: {x: 0, y: 1.7}
   rangerViewAngle: 90
   rangerViewRadius: 20
@@ -724,7 +726,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1580282823
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &905136172840690483

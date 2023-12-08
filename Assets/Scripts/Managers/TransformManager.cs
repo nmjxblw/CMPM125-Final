@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class TransformManager : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class TransformManager : MonoBehaviour
     public GameObject BoarPrefab;
     public GameObject soldierPrefab;
     public GameObject RangerPrefab;
+    public float currentPlayerIndex = 0;
+    private Transform currentTransform;
 
     public bool isLookingBoar;
     public bool isLookingSoldier;
@@ -40,9 +44,9 @@ public class TransformManager : MonoBehaviour
             Destroy(gameObject);
         }
         inputControl = new PlayerInputControl();
-
-        inputControl.Gameplay.Transform.started += TransformInput;
         currentHealth = maxHealth;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        
     }
 
     private void OnEnable()
@@ -52,7 +56,9 @@ public class TransformManager : MonoBehaviour
 
     private void OnDisable()
     {
-        inputControl.Disable();
+        if (inputControl != null) { 
+            inputControl.Disable();
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -61,53 +67,126 @@ public class TransformManager : MonoBehaviour
         {
             cinemachineCamera.Follow = currentPlayer.transform;
         }
+        currentPlayer = FindObjectOfType<PlayerController>().gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        deadLineCheck();
+        currentPlayer = GameObject.FindWithTag("Player");
+        UpdateCamera();
     }
 
-    public void SetHitTag(string hitTag)
-    {
-        this.hitTag = hitTag;
-    }
-
-    public void SetHitTag()
-    {
-        this.hitTag = null;
-    }
-
-    public void TransformCharacter(GameObject transformPrefab, Vector3 position)
-    {
-
-        if (currentPlayer != null)
-        {
-            Destroy(currentPlayer);
+    private void deadLineCheck() {
+        if (currentPlayer != null && currentPlayer.transform.position.y < -15) {
+            SceneLoader.Instance.RestartScene();
         }
-
-
-        currentPlayer = Instantiate(soldierPrefab, position, Quaternion.identity);
-        cinemachineCamera.Follow = currentPlayer.transform;
-
     }
 
-    public void TransformInput(InputAction.CallbackContext obj)
+    public void transformer(float order)
     {
-        if (hitTag != null)
+        
+        if (currentPlayer == null) return;
+        GameObject oldPlayer = currentPlayer;
+        currentTransform = currentPlayer.transform;
+        if (order == 0)
         {
-            if (hitTag == "Soldier")
+            if (currentPlayerIndex == 0)
             {
-                TransformCharacter(soldierPrefab, currentPlayer.transform.position);
-
+                return;
             }
-
-            if (hitTag == "Boar")
+            else
             {
-                TransformCharacter(soldierPrefab, currentPlayer.transform.position);
+                AudioManager.Instance.PlayTransformIntoClip();
+                currentPlayer = Instantiate(slimePrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
+                //currentPlayer.GetComponent<PlayerCharacter>().currentHealth = currentHealth;
+                Destroy(oldPlayer);
+
+                currentPlayerIndex = order;
             }
         }
+        else if (order == 1 && isLookingSoldier)
+        {
 
+            if (currentPlayerIndex == 1)
+            {
+                return;
+            }
+            else
+            {
+                AudioManager.Instance.PlayTransformIntoClip();
+                currentPlayer = Instantiate(soldierPrefab, currentTransform.position, currentTransform.rotation);
+                //currentPlayer.GetComponent<PlayerCharacter>().currentHealth = currentHealth;
+                Destroy(oldPlayer);
+
+                currentPlayerIndex = order;
+                Debug.Log("Solider");
+            }
+        }
+        else if (order == 2 && isLookingBoar)
+        {
+            if (currentPlayerIndex == 2)
+            {
+                
+                return;
+            }
+            else
+            {
+                AudioManager.Instance.PlayTransformIntoClip();
+                currentPlayer = Instantiate(BoarPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
+                //currentPlayer.GetComponent<PlayerCharacter>().currentHealth = currentHealth;
+                Destroy(oldPlayer);
+
+                currentPlayerIndex = order;
+                
+            }
+        }
+        else if (order == 3 && isLookingRanger)
+        {
+
+            if (currentPlayerIndex == 3)
+            {
+                return;
+            }
+            else
+            {
+                AudioManager.Instance.PlayTransformIntoClip();
+                currentPlayer = Instantiate(RangerPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
+                //currentPlayer.GetComponent<PlayerCharacter>().currentHealth = currentHealth;
+                Destroy(oldPlayer);
+            
+                currentPlayerIndex = order;
+                
+            }
+        }
+
+        UpdateCamera();
+    }
+
+    public void ResetGame()
+    {
+        currentPlayer = GameObject.FindWithTag("Player");
+        currentHealth = maxHealth;
+        currentPlayerIndex = 0;
+        isLookingBoar = false;
+        isLookingSoldier = false;
+        isLookingRanger = false;
+
+        UpdateCamera();
+    }
+
+    public void UpdateCamera()
+    {
+        cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (cinemachineCamera != null)
+        {
+            cinemachineCamera.Follow = currentPlayer.transform;
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Instance.currentPlayerIndex = 0;
     }
 }

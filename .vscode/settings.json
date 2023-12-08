@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "CMPM125-Final.sln"
+    "dotnet.defaultSolution": "CMPM125-Final-main-for-github.sln"
 }

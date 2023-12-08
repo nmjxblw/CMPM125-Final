@@ -103,13 +103,16 @@ MonoBehaviour:
   attackRate: 0
   isMove: 1
   isDamage: 1
+  needCheckPlayerRange: 1
   isVertical: 1
   isHorizontal: 0
   isLooping: 0
+  isDestroy: 1
   verDistance: -11
-  verSpeed: 11
+  verSpeed: 15
   horDistance: 0
   horSpeed: 0
+  activationDistance: 3
 --- !u!61 &2745987858940996620
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -13,10 +13,6 @@ public class RangerAttackState : BaseState
 
     public override void LogicUpdate()
     {
-        if (currentEnemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy Ranger Shoot") && !((Ranger)currentEnemy).isAttack && ((Ranger)currentEnemy).shoot)
-        {
-            ((Ranger)currentEnemy).ShootArrow();
-        }
         if (currentEnemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Enemy Ranger Shoot") &&
             currentEnemy.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {

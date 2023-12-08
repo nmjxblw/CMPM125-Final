@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection;
     protected Rigidbody2D rb;
 
-    protected PhysicsCheck physicsCheck;
+    private PhysicsCheck physicsCheck;
 
     private float originLocalScaleX;
 
@@ -40,11 +40,20 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Attack.started += PlayerAttack;
     }
 
-    protected virtual void Jump(InputAction.CallbackContext obj)
+    private void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGrounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            
+            if (gameObject.name.Contains("Slime"))
+            {
+                AudioManager.Instance.PlaySlimeJump();
+            }
+            else
+            {
+                AudioManager.Instance.PlaySoldierJump();
+            }
         }
     }
 
@@ -93,6 +102,19 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimation.PlayerAttack();
         isAttack = true;
+
+        if (gameObject.name.Contains("Slime"))
+        {
+            AudioManager.Instance.PlaySlimeAttack();
+        }
+        else if (gameObject.name.Contains("Ranger"))
+        {
+            AudioManager.Instance.PlayArcherAttack();
+        }
+        else
+        {
+            AudioManager.Instance.PlaySoldierAttack();
+        }
     }
 
 #region UnityEvent

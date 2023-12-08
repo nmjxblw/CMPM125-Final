@@ -1,38 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacter : Character
 {
     public float defence;
 
-    protected override void Start(){
+    protected override void Start()
+    {
         maxHealth = TransformManager.Instance.maxHealth;
-        currentHealth = maxHealth;      
+        currentHealth = TransformManager.Instance.currentHealth;
     }
 
     public override void TakeDamage(Attack attacker)
     {
-         if (invulnerable)
+        if (invulnerable)
         {
             return;
         }
-
-        if (currentHealth - (attacker.damage - defence)  > 0)
+        //float dmgTaken = Mathf.Max((attacker.damage - defence), 1);
+        float dmgTaken = Mathf.Max((attacker.damage * (100 - defence) / 100), 1);
+        //Debug.Log("Player Take Damage: " + dmgTaken);
+        currentHealth = currentHealth - dmgTaken;
+        if (currentHealth < 0)
         {
-            currentHealth -= attacker.damage - defence;
+            currentHealth = 0;
+        }
+        TransformManager.Instance.currentHealth = currentHealth;
+
+
+
+        if (currentHealth > 0)
+        {
             TriggerInvulnerable();
+            AudioManager.Instance.PlayhurtClip();
             //触发受伤
             OnTakeDamage?.Invoke(attacker.transform);
         }
         else
         {
-            currentHealth = 0;
+            AudioManager.Instance.PlayDiedClip();
             //触发死亡
             OnDeath?.Invoke();
+            //SceneLoader.Instance.GoToLooseScene(1f);
+            Invoke("GoToDieScene", 1f);
+
+
         }
-        TransformManager.Instance.currentHealth = currentHealth;
+
+    }
+
+    public void GoToDieScene()
+    {
+        SceneManager.LoadScene("Loose");
     }
 
 }

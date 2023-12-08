@@ -20,4 +20,14 @@ public class GameManager : MonoBehaviour
     {
        _instance = this;
     }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+    }
 }
