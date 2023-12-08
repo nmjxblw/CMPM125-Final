@@ -46,7 +46,8 @@ public class Soldier : Enemy
     protected override void Update()
     {
         IsArrowInSight();
-        triggerDodge = (targetAround && TransformManager.Instance.currentPlayer.GetComponent<PlayerController>().isAttack) || arrowInSight;
+        bool checkAttack = TransformManager.Instance.currentPlayer?TransformManager.Instance.currentPlayer.GetComponent<PlayerController>().isAttack : false;
+        triggerDodge = (targetAround && checkAttack) || arrowInSight;
         base.Update();
         animator.SetFloat("vx", Mathf.Abs(rb.velocity.x));
         animator.SetFloat("vy", rb.velocity.y);

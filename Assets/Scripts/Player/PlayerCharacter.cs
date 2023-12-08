@@ -24,16 +24,16 @@ public class PlayerCharacter : Character
         //float dmgTaken = Mathf.Max((attacker.damage - defence), 1);
         float dmgTaken = Mathf.Max((attacker.damage * (100 - defence) / 100), 1);
         //Debug.Log("Player Take Damage: " + dmgTaken);
-        currentHealth = currentHealth - dmgTaken;
-        if (currentHealth < 0)
+        TransformManager.Instance.currentHealth = TransformManager.Instance.currentHealth - dmgTaken;
+        
+        if (TransformManager.Instance.currentHealth < 1)
         {
-            currentHealth = 0;
+            TransformManager.Instance.currentHealth = 0;
         }
-        TransformManager.Instance.currentHealth = currentHealth;
 
+        currentHealth = TransformManager.Instance.currentHealth;
 
-
-        if (currentHealth > 0)
+        if (currentHealth > 1)
         {
             TriggerInvulnerable();
             AudioManager.Instance.PlayhurtClip();
