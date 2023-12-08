@@ -50101,6 +50101,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1353149366843931832, guid: 61cc7236947895b49a64c91e64ff319e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1746712184427050403, guid: 61cc7236947895b49a64c91e64ff319e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -50222,6 +50226,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61cc7236947895b49a64c91e64ff319e, type: 3}
+--- !u!114 &1332719369544256603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5760195239096374269, guid: 61cc7236947895b49a64c91e64ff319e, type: 3}
+  m_PrefabInstance: {fileID: 1332719369544256602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2348361665814603237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50469,6 +50484,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6523706708855780597, guid: fd8477e196729a949a1b3c5877487143, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 1332719369544256603}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
